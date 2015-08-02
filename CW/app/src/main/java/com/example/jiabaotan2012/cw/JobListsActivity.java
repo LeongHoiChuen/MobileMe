@@ -29,7 +29,7 @@ public class JobListsActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job_lists);
 
-        etResponse = (EditText) findViewById(R.id.etResponse);
+        //etResponse = (EditText) findViewById(R.id.etResponse);
         new HttpAsyncTask().execute("https://clockwork-api.herokuapp.com/api/v1/posts/all.json");
     }
 
