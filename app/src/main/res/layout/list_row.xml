@@ -1,92 +1,107 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent" android:layout_height="match_parent"
+android:padding="6dp"
+    >
+
+<android.support.v7.widget.CardView
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin">
+    android:layout_height="wrap_content"
+    android:id="@+id/cv"
+    >
 
-    <!-- Job Title -->
-    <TextView
-        android:id="@+id/jobTitle"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="JOB TITLE"
-        android:textColor="#040404"
-        android:typeface="sans"
-        android:textSize="20dip"
-        android:textStyle="bold"/>
+        android:padding="8dp"
 
-    <!-- Hiring Company -->
-    <TextView
-        android:id="@+id/hiringCo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#343434"
-        android:textSize="15dip"
-        android:text="HIRING COMPANY"
-        android:layout_below="@+id/jobTitle"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        >
 
-    <!-- Start Date -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="START DATE"
-        android:textColor="#10bcc9"
-        android:textSize="15dip"
-        android:id="@+id/startDate"
-        android:layout_below="@+id/hiringCo"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        <!-- Job Title -->
+        <TextView
+            android:id="@+id/jobTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="JOB TITLE"
+            android:textColor="#040404"
+            android:typeface="sans"
+            android:textSize="20dip"
+            android:textStyle="bold"/>
 
-    <!-- Salary -->
-    <TextView
-        android:id="@+id/salary"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:gravity="right"
-        android:text="SALARY / HOUR"
-        android:layout_marginRight="5dip"
-        android:textSize="15dip"
-        android:textColor="#10bcc9"
-        android:textStyle="bold"/>
+        <!-- Hiring Company -->
+        <TextView
+            android:id="@+id/hiringCo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#343434"
+            android:textSize="15dip"
+            android:text="HIRING COMPANY"
+            android:layout_below="@+id/jobTitle"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
-    <!-- Location Image -->
-    <ImageView
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:id="@+id/locationImage"
-        android:src="@drawable/location"
-        android:layout_alignBottom="@+id/location"
-        android:layout_toLeftOf="@+id/location"
-        android:layout_toStartOf="@+id/location" />
+        <!-- Start Date -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="START DATE"
+            android:textColor="#10bcc9"
+            android:textSize="15dip"
+            android:id="@+id/startDate"
+            android:layout_below="@+id/hiringCo"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
-    <!-- Location Text -->
-    <TextView
-        android:id="@+id/location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="right"
-        android:text="LOCATION"
-        android:textSize="15dip"
-        android:textColor="#10bcc9"
-        android:textStyle="bold"
-        android:layout_below="@+id/jobTitle"
-        android:layout_alignRight="@+id/salary"
-        android:layout_alignEnd="@+id/salary" />
+        <!-- Salary -->
+        <TextView
+            android:id="@+id/salary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:gravity="right"
+            android:text="SALARY / HOUR"
+            android:layout_marginRight="5dip"
+            android:textSize="15dip"
+            android:textColor="#10bcc9"
+            android:textStyle="bold"/>
 
-    <!-- Details Button -->
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="View Details"
-        android:id="@+id/detailsBtn"
-        android:layout_alignTop="@+id/startDate"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        <!-- Location Image -->
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:id="@+id/locationImage"
+            android:src="@drawable/location"
+            android:layout_alignBottom="@+id/location"
+            android:layout_toLeftOf="@+id/location"
+            android:layout_toStartOf="@+id/location" />
 
-</RelativeLayout>
+        <!-- Location Text -->
+        <TextView
+            android:id="@+id/location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="LOCATION"
+            android:textSize="15dip"
+            android:textColor="#10bcc9"
+            android:textStyle="bold"
+            android:layout_below="@+id/jobTitle"
+            android:layout_alignRight="@+id/salary"
+            android:layout_alignEnd="@+id/salary" />
+
+        <!-- Details Button -->
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="View Details"
+            android:id="@+id/detailsBtn"
+            android:layout_alignTop="@+id/startDate"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
+
+</LinearLayout>
