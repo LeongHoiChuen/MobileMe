@@ -1,5 +1,7 @@
 package com.example.jiabaotan2012.cw;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -8,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -29,16 +32,16 @@ import java.util.ArrayList;
 
 public class JobListsActivity extends ActionBarActivity {
 
-    private ListView lv;
-    private ArrayList<Post> postList;
+    ListView listView;
+    ListingAdapter listingAdapter;
+    ArrayList<Post> postList;
+    ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job_lists);
-
         new HttpAsyncTask().execute("https://clockwork-api.herokuapp.com/api/v1/posts/all.json");
-        ListingAdapter listingAdapter = new ListingAdapter(this, postList);
     }
 
     @Override
@@ -69,14 +72,14 @@ public class JobListsActivity extends ActionBarActivity {
         try {
 
             // create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
+            HttpClient httpClient = new DefaultHttpClient();
 
             // make GET request to the given URL
-            HttpResponse httpResponse = httpclient.execute(new HttpGet(url));
+            HttpResponse httpResponse = httpClient.execute(new HttpGet(url));
 
             // receive response as inputStream
             inputStream = httpResponse.getEntity().getContent();
-
+            
             // convert inputstream to string
             if(inputStream != null)
                 result = convertInputStreamToString(inputStream);
@@ -102,6 +105,17 @@ public class JobListsActivity extends ActionBarActivity {
     }
 
     private class HttpAsyncTask extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog = new ProgressDialog(JobListsActivity.this);
+            dialog.setTitle("Retrieving job listings");
+            dialog.setMessage("Loading...");
+            dialog.setIndeterminate(false);
+            dialog.show();
+        }
+
         @Override
         protected String doInBackground(String... urls) {
 
@@ -110,12 +124,16 @@ public class JobListsActivity extends ActionBarActivity {
         // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result) {
-            Toast.makeText(getBaseContext(), "Received!", Toast.LENGTH_LONG).show();
-            //etResponse.setText(result);
-            postList = new ArrayList<Post>();
+            Toast.makeText(getBaseContext(), "Received" + result, Toast.LENGTH_LONG).show();
             Gson gson = new Gson();
             Type listType = new TypeToken<ArrayList<Post>>(){}.getType();
             postList = gson.fromJson(result, listType);
+
+            listView = (ListView) findViewById(R.id.list);
+            listingAdapter = new ListingAdapter(JobListsActivity.this, postList);
+
+            listView.setAdapter(listingAdapter);
+            dialog.dismiss();
         }
     }
 }

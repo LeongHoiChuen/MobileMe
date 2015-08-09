@@ -4,6 +4,7 @@ package com.example.jiabaotan2012.cw;
  * Created by jiabao.tan.2012 on 2/8/2015.
  */
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -20,21 +21,27 @@ import android.widget.TextView;
 public class ListingAdapter extends BaseAdapter {
 
     private Activity activity;
-    private String data;
+    private ArrayList<Post> postList = new ArrayList<Post>();
     private static LayoutInflater inflater = null;
 
     public ListingAdapter(Activity activity, ArrayList<Post> arrayList) {
         this.activity = activity;
-        this.inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.postList = arrayList;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = convertView;
 
-        if (convertView == null) {
-            view = inflater.inflate(R.layout.activity_job_lists, null);
+        if (inflater == null) {
+            inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
+
+        if (convertView == null) {
+            view = inflater.inflate(R.layout.list_row, null);
+        }
+
+        Post p = postList.get(position);
 
         TextView jobTitle = (TextView) view.findViewById(R.id.jobTitle);
         TextView hiringCo = (TextView) view.findViewById(R.id.hiringCo);
@@ -45,21 +52,28 @@ public class ListingAdapter extends BaseAdapter {
         Button detailsBtn = (Button) view.findViewById(R.id.detailsBtn);
 
         // set text
-        return null;
+        jobTitle.setText(p.getHeader());
+        hiringCo.setText(p.getCompany());
+        startDate.setText("" + p.getJobDate());
+        salary.setText("" + p.getSalary());
+
+        location.setText(p.getLocation());
+
+        return view;
     }
 
     @Override
     public int getCount() {
-        return data.length();
+        return postList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return postList.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 }
