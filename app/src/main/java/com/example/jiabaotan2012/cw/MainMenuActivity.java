@@ -50,17 +50,15 @@ public class MainMenuActivity extends ActionBarActivity {
         ed2 = (EditText)findViewById(R.id.editText2);
         resultText = (EditText) findViewById(R.id.resultText);
 
-        final Button button = (Button)findViewById(R.id.button);
+        final Button button = (Button)findViewById(R.id.LoginButton);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Intent register = new Intent(view.getContext(), RegisterActivity.class);
-                //startActivity(register);
                 new HttpAsyncTask().execute("https://clockwork-api.herokuapp.com/users/sign_in.json");
             }
         });
 
-        final Button button2 = (Button)findViewById(R.id.button2);
+        final Button button2 = (Button)findViewById(R.id.ListingButton);
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,7 +67,7 @@ public class MainMenuActivity extends ActionBarActivity {
             }
         });
 
-        final Button button3 = (Button)findViewById(R.id.button3);
+        final Button button3 = (Button)findViewById(R.id.RegisterButton);
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -121,7 +119,7 @@ public class MainMenuActivity extends ActionBarActivity {
 
             List<NameValuePair> pairs = new ArrayList<NameValuePair>();
 
-            pairs.add(new BasicNameValuePair("user[username]", loginUser.getName()));
+            pairs.add(new BasicNameValuePair("user[email]", loginUser.getName()));
             pairs.add(new BasicNameValuePair("user[password]", loginUser.getPassword()));
 
             // 4. convert JSONObject to JSON to String

@@ -13,7 +13,6 @@ public class LoginUser {
     public LoginUser (String userName, String passWord) {
         this.setName(userName);
         this.setPassword(passWord);
-
     }
 
     public String getName() {
