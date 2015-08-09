@@ -7,30 +7,38 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 
 public class JobListsActivity extends ActionBarActivity {
 
-    EditText etResponse;
+    private ListView lv;
+    private ArrayList<Post> postList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job_lists);
 
-        etResponse = (EditText) findViewById(R.id.etResponse);
         new HttpAsyncTask().execute("https://clockwork-api.herokuapp.com/api/v1/posts/all.json");
+        ListingAdapter listingAdapter = new ListingAdapter(this, postList);
     }
 
     @Override
@@ -103,7 +111,11 @@ public class JobListsActivity extends ActionBarActivity {
         @Override
         protected void onPostExecute(String result) {
             Toast.makeText(getBaseContext(), "Received!", Toast.LENGTH_LONG).show();
-            etResponse.setText(result);
+            //etResponse.setText(result);
+            postList = new ArrayList<Post>();
+            Gson gson = new Gson();
+            Type listType = new TypeToken<ArrayList<Post>>(){}.getType();
+            postList = gson.fromJson(result, listType);
         }
     }
 }
