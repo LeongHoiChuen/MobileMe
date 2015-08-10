@@ -15,7 +15,6 @@ import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
@@ -28,10 +27,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.util.Log;
 
 import android.widget.Toast;
@@ -48,7 +44,6 @@ public class MainMenuActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main_menu);
         ed1 = (EditText)findViewById(R.id.editText);
         ed2 = (EditText)findViewById(R.id.editText2);
-        resultText = (EditText) findViewById(R.id.resultText);
 
         final Button button = (Button)findViewById(R.id.LoginButton);
         button.setOnClickListener(new View.OnClickListener() {
@@ -71,13 +66,13 @@ public class MainMenuActivity extends ActionBarActivity {
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent register = new Intent(view.getContext(), RegisterActivity.class);
+                Intent register = new Intent(view.getContext(), EmployerRegisterActivity.class);
                 startActivity(register);
             }
         });
 
         final Button addPostButton = (Button) findViewById(R.id.addPostButton);
-        button2.setOnClickListener(new View.OnClickListener() {
+        addPostButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent addNewPost = new Intent(view.getContext(), AddNewPostActivity.class);
