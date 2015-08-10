@@ -6,32 +6,20 @@ package com.example.jiabaotan2012.cw;
 import java.util.Date;
 
 public class Post {
-    private int id;
     private String header;
     private String company;
     private int salary;
     private String description;
     private String location;
-    private Date postingDate;
-    private Date jobDate;
+    private String jobDate;
 
-    public Post(int id, String header, String company, int salary, String description, String location, Date postingDate, Date jobDate) {
-        this.id = id;
+    public Post(String header, String company, int salary, String description, String location, String jobDate) {
         this.header = header;
         this.company = company;
         this.salary = salary;
         this.description = description;
         this.location = location;
-        this.postingDate = postingDate;
         this.jobDate = jobDate;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getHeader() {
@@ -74,19 +62,11 @@ public class Post {
         this.location = location;
     }
 
-    public Date getPostingDate() {
-        return postingDate;
-    }
-
-    public void setPostingDate(Date postingDate) {
-        this.postingDate = postingDate;
-    }
-
-    public Date getJobDate() {
+    public String getJobDate() {
         return jobDate;
     }
 
-    public void setJobDate(Date jobDate) {
+    public void setJobDate(String jobDate) {
         this.jobDate = jobDate;
     }
 }
