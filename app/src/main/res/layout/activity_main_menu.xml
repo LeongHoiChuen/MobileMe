@@ -87,7 +87,7 @@
         android:layout_height="wrap_content"
         android:text="login"
         android:id="@+id/LoginButton"
-        android:layout_above="@+id/ListingButton"
+        android:layout_alignTop="@+id/RegisterButton"
         android:layout_toLeftOf="@+id/RegisterButton"
         android:layout_toStartOf="@+id/RegisterButton" />
 
@@ -104,23 +104,16 @@
         android:layout_height="wrap_content"
         android:text="Register"
         android:id="@+id/RegisterButton"
-        android:layout_above="@+id/ListingButton"
-        android:layout_toRightOf="@+id/textView"
-        android:layout_toEndOf="@+id/textView" />
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/resultText"
-        android:layout_gravity="center_horizontal" />
+        android:layout_above="@+id/addPostButton"
+        android:layout_toRightOf="@+id/listingButton"
+        android:layout_toEndOf="@+id/listingButton" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Post"
         android:id="@+id/addPostButton"
-        android:layout_below="@+id/RegisterButton"
-        android:layout_alignRight="@+id/RegisterButton"
-        android:layout_alignEnd="@+id/RegisterButton"
+        android:layout_alignTop="@+id/listingButton"
         android:layout_toRightOf="@+id/textView"
         android:layout_toEndOf="@+id/textView" />
 

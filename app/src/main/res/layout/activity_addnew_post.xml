@@ -50,6 +50,7 @@
                 <EditText
                     android:id="@+id/jobTitle"
                     android:inputType="text"
+                    android:textSize="15sp"
                     android:hint="What is the job title?"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
@@ -69,6 +70,7 @@
                 <EditText
                     android:id="@+id/jobLocation"
                     android:inputType="text"
+                    android:textSize="15sp"
                     android:hint="Where is the location?"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
@@ -88,6 +90,7 @@
                 <EditText
                     android:id="@+id/jobDescription"
                     android:inputType="textMultiLine"
+                    android:textSize="15sp"
                     android:hint="What does the job entail?"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
@@ -106,7 +109,7 @@
                     android:textStyle="bold" />
                 <EditText
                     android:id="@+id/jobDate"
-                    android:inputType="number"
+                    android:textSize="15sp"
                     android:hint="When is the job?"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />

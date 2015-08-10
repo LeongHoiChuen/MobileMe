@@ -185,6 +185,5 @@ public class RegisterActivity extends ActionBarActivity {
 
         inputStream.close();
         return result;
-
     }
 }

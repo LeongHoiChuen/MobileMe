@@ -27,6 +27,10 @@
             android:name=".JobListsActivity"
             android:label="@string/title_activity_job_lists" >
         </activity>
+        <activity
+            android:name=".AddNewPostActivity"
+            android:label="@string/title_activity_add_new_post" >
+        </activity>
     </application>
 
 </manifest>
