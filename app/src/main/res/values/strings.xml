@@ -9,5 +9,7 @@
     <color name="white">#FFFFFF</color>
     <color name="primary">#ac1d39</color>
     <string name="title_activity_add_new_post">AddNewPostActivity</string>
+    <string name="title_activity_register_type">RegisterTypeActivity</string>
+    <string name="title_activity_jsregister">JSRegisterActivity</string>
 
 </resources>

@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RegisterActivity"
+            android:name=".EmployerRegisterActivity"
             android:label="@string/title_activity_register" >
         </activity>
         <activity
@@ -30,6 +30,14 @@
         <activity
             android:name=".AddNewPostActivity"
             android:label="@string/title_activity_add_new_post" >
+        </activity>
+        <activity
+            android:name=".RegisterTypeActivity"
+            android:label="@string/title_activity_register_type" >
+        </activity>
+        <activity
+            android:name=".JSRegisterActivity"
+            android:label="@string/title_activity_jsregister" >
         </activity>
     </application>
 
