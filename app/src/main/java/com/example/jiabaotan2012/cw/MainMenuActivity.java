@@ -58,7 +58,7 @@ public class MainMenuActivity extends ActionBarActivity {
             }
         });
 
-        final Button button2 = (Button)findViewById(R.id.ListingButton);
+        final Button button2 = (Button)findViewById(R.id.listingButton);
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,6 +73,15 @@ public class MainMenuActivity extends ActionBarActivity {
             public void onClick(View view) {
                 Intent register = new Intent(view.getContext(), RegisterActivity.class);
                 startActivity(register);
+            }
+        });
+
+        final Button addPostButton = (Button) findViewById(R.id.addPostButton);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent addNewPost = new Intent(view.getContext(), AddNewPostActivity.class);
+                startActivity(addNewPost);
             }
         });
 

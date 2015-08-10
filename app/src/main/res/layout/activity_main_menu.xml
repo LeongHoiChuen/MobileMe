@@ -94,10 +94,11 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cancel"
-        android:id="@+id/ListingButton"
+        android:text="View"
+        android:id="@+id/listingButton"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignRight="@+id/textView"
+        android:layout_alignEnd="@+id/textView" />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -111,4 +112,16 @@
         android:layout_height="wrap_content"
         android:id="@+id/resultText"
         android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Post"
+        android:id="@+id/addPostButton"
+        android:layout_below="@+id/RegisterButton"
+        android:layout_alignRight="@+id/RegisterButton"
+        android:layout_alignEnd="@+id/RegisterButton"
+        android:layout_toRightOf="@+id/textView"
+        android:layout_toEndOf="@+id/textView" />
+
 </RelativeLayout>
