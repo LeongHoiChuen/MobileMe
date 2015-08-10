@@ -24,7 +24,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import android.os.AsyncTask;
@@ -32,19 +34,30 @@ import android.util.Log;
 
 import android.widget.Toast;
 
-public class MainMenuActivity extends ActionBarActivity {
-    EditText ed1,ed2,resultText;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+public class MainMenuActivity extends ActionBarActivity {
+    static int statusCode;
+    EditText ed1,ed2;
     TextView tx1;
-    int counter = 3;
-    LoginUser loginUser;
+    User loginUser;
+    UserSessionManager session;
+    static HttpResponse httpResponse;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
         ed1 = (EditText)findViewById(R.id.editText);
         ed2 = (EditText)findViewById(R.id.editText2);
+<<<<<<< HEAD
 
+=======
+        tx1 = (TextView)findViewById(R.id.resultText);
+        //User Session Manager'
+        session = new UserSessionManager(getApplicationContext());
+>>>>>>> 338ff76bc6fae9056a098ee95f8ebe319e4e36f3
         final Button button = (Button)findViewById(R.id.LoginButton);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,7 +66,7 @@ public class MainMenuActivity extends ActionBarActivity {
             }
         });
 
-        final Button button2 = (Button)findViewById(R.id.listingButton);
+        final Button button2 = (Button)findViewById(R.id.ListingButton);
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,6 +84,7 @@ public class MainMenuActivity extends ActionBarActivity {
             }
         });
 
+<<<<<<< HEAD
         final Button addPostButton = (Button) findViewById(R.id.addPostButton);
         addPostButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +96,8 @@ public class MainMenuActivity extends ActionBarActivity {
 
         tx1 = (TextView)findViewById(R.id.textView3);
         tx1.setVisibility(View.GONE);
+=======
+>>>>>>> 338ff76bc6fae9056a098ee95f8ebe319e4e36f3
     }
 
     @Override
@@ -105,7 +121,7 @@ public class MainMenuActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
-    public static String POST(String url, LoginUser loginUser){
+    public static String POST(String url, User loginUser){
         InputStream inputStream = null;
         String result = "";
         try {
@@ -123,7 +139,7 @@ public class MainMenuActivity extends ActionBarActivity {
 
             List<NameValuePair> pairs = new ArrayList<NameValuePair>();
 
-            pairs.add(new BasicNameValuePair("user[email]", loginUser.getName()));
+            pairs.add(new BasicNameValuePair("user[email]", loginUser.getEmail()));
             pairs.add(new BasicNameValuePair("user[password]", loginUser.getPassword()));
 
             // 4. convert JSONObject to JSON to String
@@ -143,7 +159,9 @@ public class MainMenuActivity extends ActionBarActivity {
             httpPost.setHeader("Accept", "application/json");
 
             // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
+            httpResponse = httpclient.execute(httpPost);
+            statusCode = httpResponse.getStatusLine().getStatusCode();
+
 
             // 9. receive response as inputStream
             inputStream = httpResponse.getEntity().getContent();
@@ -165,16 +183,53 @@ public class MainMenuActivity extends ActionBarActivity {
         @Override
         protected String doInBackground(String... urls) {
 
-            loginUser = new LoginUser(ed1.getText().toString(), ed2.getText().toString());
+            loginUser = new User(ed1.getText().toString(), ed2.getText().toString());
 
             return POST(urls[0], loginUser);
         }
+
         // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result) {
-            Toast.makeText(getBaseContext(), "Data Sent!", Toast.LENGTH_LONG).show();
+            if(statusCode == 401) {
+                tx1.setText("The email / password is invalid, please try again.");
+            }else {
+                Gson gson = new Gson();
+                Type hashType = new TypeToken<HashMap<String, Object>>(){}.getType();
+                HashMap userHash = gson.fromJson(result, hashType);
+                Double idDouble = (Double)userHash.get("id");
+                int id = idDouble.intValue();
+                String username = (String)userHash.get("username");
+                String email = (String)userHash.get("email");
+                String accountType = (String)userHash.get("account_type");
+                String authenticationToken = (String)userHash.get("authentication_token");
+                String passWord = ed2.getText().toString();
 
-            resultText.setText(result);
+                if(accountType.equals("job_seeker")) {
+                    session.createUserLoginSession(id, username, email, accountType, passWord, authenticationToken);
+                    // Starting MainActivity
+                    Intent i = new Intent(getApplicationContext(), JobListsActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                    // Add new Flag to start new Activity
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(i);
+
+                    finish();
+                }else {
+                    session.createUserLoginSession(id, username, email, accountType, passWord, authenticationToken);
+                    // Starting MainActivity
+                    Intent i = new Intent(getApplicationContext(), RegisterActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                    // Add new Flag to start new Activity
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(i);
+
+                    finish();
+
+                }
+            }
         }
     }
 

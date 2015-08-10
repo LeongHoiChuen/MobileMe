@@ -62,7 +62,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Attempts Left:"
         android:id="@+id/textView2"
         android:layout_below="@+id/editText2"
         android:layout_alignParentLeft="true"
@@ -72,7 +71,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
         android:id="@+id/textView3"
         android:layout_alignTop="@+id/textView2"
         android:layout_alignParentRight="true"
@@ -81,6 +79,15 @@
         android:layout_toEndOf="@+id/textview"
         android:textSize="25dp"
         android:layout_toRightOf="@+id/textview" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/resultText"
+        android:layout_below="@+id/editText2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textSize="25dp" />
 
     <Button
         android:layout_width="wrap_content"
@@ -95,7 +102,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="View"
-        android:id="@+id/listingButton"
+        android:id="@+id/ListingButton"
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/textView"
         android:layout_alignEnd="@+id/textView" />
@@ -105,15 +112,15 @@
         android:text="Register"
         android:id="@+id/RegisterButton"
         android:layout_above="@+id/addPostButton"
-        android:layout_toRightOf="@+id/listingButton"
-        android:layout_toEndOf="@+id/listingButton" />
+        android:layout_toRightOf="@+id/ListingButton"
+        android:layout_toEndOf="@+id/ListingButton" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Post"
         android:id="@+id/addPostButton"
-        android:layout_alignTop="@+id/listingButton"
+        android:layout_alignTop="@+id/ListingButton"
         android:layout_toRightOf="@+id/textView"
         android:layout_toEndOf="@+id/textView" />
 
