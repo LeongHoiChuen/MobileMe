@@ -51,13 +51,10 @@ public class MainMenuActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main_menu);
         ed1 = (EditText)findViewById(R.id.editText);
         ed2 = (EditText)findViewById(R.id.editText2);
-<<<<<<< HEAD
 
-=======
         tx1 = (TextView)findViewById(R.id.resultText);
         //User Session Manager'
         session = new UserSessionManager(getApplicationContext());
->>>>>>> 338ff76bc6fae9056a098ee95f8ebe319e4e36f3
         final Button button = (Button)findViewById(R.id.LoginButton);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,12 +76,11 @@ public class MainMenuActivity extends ActionBarActivity {
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent register = new Intent(view.getContext(), EmployerRegisterActivity.class);
+                Intent register = new Intent(view.getContext(), RegisterTypeActivity.class);
                 startActivity(register);
             }
         });
 
-<<<<<<< HEAD
         final Button addPostButton = (Button) findViewById(R.id.addPostButton);
         addPostButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,8 +92,6 @@ public class MainMenuActivity extends ActionBarActivity {
 
         tx1 = (TextView)findViewById(R.id.textView3);
         tx1.setVisibility(View.GONE);
-=======
->>>>>>> 338ff76bc6fae9056a098ee95f8ebe319e4e36f3
     }
 
     @Override
@@ -219,7 +213,7 @@ public class MainMenuActivity extends ActionBarActivity {
                 }else {
                     session.createUserLoginSession(id, username, email, accountType, passWord, authenticationToken);
                     // Starting MainActivity
-                    Intent i = new Intent(getApplicationContext(), RegisterActivity.class);
+                    Intent i = new Intent(getApplicationContext(), RegisterTypeActivity.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
                     // Add new Flag to start new Activity
