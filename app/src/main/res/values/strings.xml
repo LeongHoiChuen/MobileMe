@@ -5,4 +5,9 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_register">RegisterActivity</string>
     <string name="title_activity_job_lists">JobListsActivity</string>
+
+    <color name="white">#FFFFFF</color>
+    <color name="primary">#ac1d39</color>
+
+
 </resources>

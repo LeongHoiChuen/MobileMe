@@ -51,7 +51,7 @@ public class RegisterActivity extends ActionBarActivity {
         emailText = (EditText)findViewById(R.id.emailText);
         nameText = (EditText)findViewById(R.id.nameText);
         pwText = (EditText)findViewById(R.id.pwText);
-        repwText = (EditText)findViewById(R.id.repwText);
+        repwText = (EditText)findViewById(R.id.pwText);
         typeGroup = (RadioGroup) findViewById(R.id.typeGroup);
         errorText = (TextView) findViewById(R.id.errorText);
 
