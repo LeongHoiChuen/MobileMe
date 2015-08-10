@@ -1,35 +1,33 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/primary"
-    tools:context="com.example.jiabaotan2012.cw.RegisterActivity"
-    >
+    tools:context="com.example.jiabaotan2012.cw.RegisterActivity">
+
+    <include layout="@layout/header" />
+    <include layout="@layout/footer" />
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="12dp">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageView1"
-            android:src="@drawable/cw_white"
-            android:layout_gravity="center_horizontal" />
+        android:layout_above="@+id/footer"
+        android:layout_below="@+id/header"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp" >
 
         <ImageView
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:id="@+id/imageView2"
+            android:id="@+id/imageView1"
             android:src="@drawable/register_emp"
             android:layout_gravity="center_horizontal" />
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="@drawable/rounded_corner"
             android:padding="12dp">
 
