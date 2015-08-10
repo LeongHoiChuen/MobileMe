@@ -49,9 +49,8 @@ public class RegisterActivity extends ActionBarActivity {
         emailText = (EditText)findViewById(R.id.emailText);
         nameText = (EditText)findViewById(R.id.nameText);
         pwText = (EditText)findViewById(R.id.pwText);
-        repwText = (EditText)findViewById(R.id.pwText);
-        typeGroup = (RadioGroup) findViewById(R.id.typeGroup);
-        resultText = (EditText) findViewById(R.id.resultText);
+
+
 
         final Button submitBtn = (Button)findViewById(R.id.submitBtn);
         submitBtn.setOnClickListener(new View.OnClickListener() {
@@ -159,7 +158,7 @@ public class RegisterActivity extends ActionBarActivity {
         protected String doInBackground(String... urls) {
             String accountType = "";
 
-            if (acctType.getText().toString().equals("Employer")) {
+            if (true) {
                 accountType = "employer";
             } else {
                 accountType = "job_seeker";
