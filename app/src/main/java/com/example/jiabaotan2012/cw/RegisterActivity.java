@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
@@ -36,7 +37,8 @@ import org.apache.http.message.BasicNameValuePair;
 
 public class RegisterActivity extends ActionBarActivity {
 
-    EditText emailText, nameText, pwText, repwText, resultText;
+    EditText emailText, nameText, pwText, repwText;
+    TextView errorText;
     RadioGroup typeGroup;
     RadioButton acctType;
     Account account;
@@ -51,7 +53,7 @@ public class RegisterActivity extends ActionBarActivity {
         pwText = (EditText)findViewById(R.id.pwText);
         repwText = (EditText)findViewById(R.id.repwText);
         typeGroup = (RadioGroup) findViewById(R.id.typeGroup);
-        resultText = (EditText) findViewById(R.id.resultText);
+        errorText = (TextView) findViewById(R.id.errorText);
 
         final Button submitBtn = (Button)findViewById(R.id.submitBtn);
         submitBtn.setOnClickListener(new View.OnClickListener() {
@@ -61,9 +63,8 @@ public class RegisterActivity extends ActionBarActivity {
                 acctType = (RadioButton) findViewById(selectedId);
                 new HttpAsyncTask().execute("https://clockwork-api.herokuapp.com/users.json");
 
-
-                //Intent register = new Intent(view.getContext(), RegisterActivity.class);
-                //startActivity(register);
+                Intent jobListings = new Intent(view.getContext(), JobListsActivity.class);
+                startActivity(jobListings);
             }
         });
     }
@@ -173,8 +174,8 @@ public class RegisterActivity extends ActionBarActivity {
         // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result) {
-            Toast.makeText(getBaseContext(), "Data Sent!", Toast.LENGTH_LONG).show();
-            resultText.setText(result);
+            //Toast.makeText(getBaseContext(), "Data Sent!", Toast.LENGTH_LONG).show();
+
         }
     }
 

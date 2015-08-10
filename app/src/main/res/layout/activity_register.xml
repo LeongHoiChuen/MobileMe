@@ -74,6 +74,17 @@
                 android:id="@+id/typeGroup"
                 android:gravity="center_horizontal">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text=""
+                    android:textColor="#F22613"
+                    android:textFamily="sans"
+                    android:textStyle="bold"
+                    android:id="@+id/errorText"
+                    android:layout_gravity="center_horizontal" />
+
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -92,12 +103,6 @@
                 android:layout_height="wrap_content"
                 android:text="Sign me up!"
                 android:id="@+id/submitBtn"
-                android:layout_gravity="center_horizontal" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/resultText"
                 android:layout_gravity="center_horizontal" />
         </LinearLayout>
 
