@@ -1,35 +1,71 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/primary"
-    tools:context="com.example.jiabaotan2012.cw.EmployerRegisterActivity">
-
-    <include layout="@layout/header" />
-    <include layout="@layout/footer" />
-
-    <LinearLayout
-        android:orientation="vertical"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/footer"
-        android:layout_below="@+id/header"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp" >
+        android:layout_height="match_parent"
+        android:background="@color/primary"
+        tools:context="com.example.jiabaotan2012.cw.EmployerRegisterActivity">
 
-        <ImageView
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:id="@+id/empRegister"
-            android:src="@drawable/register_emp"
-            android:layout_gravity="center_horizontal" />
+        <include layout="@layout/header" />
+        <include layout="@layout/footer" />
 
-        <ImageView
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:id="@+id/jsRegister"
-            android:src="@drawable/register_js"
-            android:layout_gravity="center_horizontal" />
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/footer"
+            android:layout_below="@+id/header"
+            android:gravity="center">
 
-    </LinearLayout>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:scaleType="fitStart"
+                android:layout_weight="1" >
+
+                <ImageView
+                    android:id="@+id/jsRegister"
+                    android:src="@drawable/register_js"
+                    android:layout_width="wrap_content"
+                    android:layout_height="200dp"
+                    android:background="@null">
+                </ImageView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/jsRegister"
+                    android:layout_centerInParent="true"
+                    android:text="Job Seeker"
+                    android:textColor="@color/white"
+                    android:textSize="30dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:scaleType="fitStart"
+                android:layout_weight="1" >
+
+                <ImageView
+                    android:id="@+id/empRegister"
+                    android:src="@drawable/register_emp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="200dp"
+                    android:background="@null">
+                </ImageView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/empRegister"
+                    android:layout_centerInParent="true"
+                    android:text="Employer"
+                    android:textColor="@color/white"
+                    android:textSize="30dp"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
 </RelativeLayout>

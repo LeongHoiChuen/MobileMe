@@ -34,19 +34,19 @@
             <EditText
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
-                android:hint="Email Address"
+                android:inputType="textPersonName"
+                android:hint="Company Name"
                 android:ems="8"
-                android:id="@+id/emailText"
+                android:id="@+id/nameText"
                 android:layout_gravity="center_horizontal" />
 
             <EditText
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:hint="Name"
+                android:inputType="textEmailAddress"
+                android:hint="Email Address"
                 android:ems="8"
-                android:id="@+id/nameText"
+                android:id="@+id/emailText"
                 android:layout_gravity="center_horizontal" />
 
             <EditText
