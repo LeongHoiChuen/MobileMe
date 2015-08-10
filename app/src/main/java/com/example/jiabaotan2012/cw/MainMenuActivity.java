@@ -51,8 +51,8 @@ public class MainMenuActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main_menu);
         ed1 = (EditText)findViewById(R.id.editText);
         ed2 = (EditText)findViewById(R.id.editText2);
-
         tx1 = (TextView)findViewById(R.id.resultText);
+
         //User Session Manager'
         session = new UserSessionManager(getApplicationContext());
         final Button button = (Button)findViewById(R.id.LoginButton);
@@ -90,8 +90,6 @@ public class MainMenuActivity extends ActionBarActivity {
             }
         });
 
-        tx1 = (TextView)findViewById(R.id.textView3);
-        tx1.setVisibility(View.GONE);
     }
 
     @Override
@@ -219,7 +217,6 @@ public class MainMenuActivity extends ActionBarActivity {
                     // Add new Flag to start new Activity
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(i);
-
                     finish();
 
                 }

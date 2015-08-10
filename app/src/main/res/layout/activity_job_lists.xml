@@ -24,7 +24,7 @@
         android:layout_alignEnd="@+id/list" />
 
     <TextView
-        android:id="@+id/lblName"
+        android:id="@+id/welcomeMessage"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:singleLine="true"

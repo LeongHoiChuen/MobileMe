@@ -41,7 +41,6 @@ public class JobListsActivity extends ActionBarActivity {
     ArrayList<Post> postList;
     ProgressDialog dialog;
     UserSessionManager session;
-    // Button Logout
     Button btnLogout;
 
     @Override
@@ -52,14 +51,16 @@ public class JobListsActivity extends ActionBarActivity {
 
         // Session class instance
         session = new UserSessionManager(getApplicationContext());
-        TextView lblName = (TextView) findViewById(R.id.lblName);
+        TextView welcomeMsg = (TextView) findViewById(R.id.welcomeMessage);
         // Button logout
         btnLogout = (Button) findViewById(R.id.logoutButton);
         // Check user login (this is the important point)
         // If User is not logged in , This will redirect user to LoginActivity
         // and finish current activity from activity stack.
-        if(session.checkLogin())
+        if(session.checkLogin()) {
+
             finish();
+        }
 
         // get user data from session
         HashMap<String, String> user = session.getUserDetails();
@@ -69,7 +70,7 @@ public class JobListsActivity extends ActionBarActivity {
 
 
         // Show user data on activity
-        lblName.setText(Html.fromHtml("Welcome <b>" + name + "</b>"));
+        welcomeMsg.setText(Html.fromHtml("Welcome <b>" + name + "</b>"));
 
         btnLogout.setOnClickListener(new View.OnClickListener() {
 
