@@ -105,4 +105,12 @@
         android:layout_toRightOf="@+id/textView"
         android:layout_toEndOf="@+id/textView" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Button"
+        android:id="@+id/tabbedButton"
+        android:layout_above="@+id/LoginButton"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>
