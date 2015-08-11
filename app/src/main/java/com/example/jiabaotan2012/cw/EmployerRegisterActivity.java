@@ -14,6 +14,9 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -24,7 +27,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.http.NameValuePair;
@@ -39,6 +44,9 @@ public class EmployerRegisterActivity extends ActionBarActivity {
     RadioGroup typeGroup;
     RadioButton acctType;
     Account account;
+    UserSessionManager session;
+    static HttpResponse httpResponse;
+    static int statusCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,7 +138,8 @@ public class EmployerRegisterActivity extends ActionBarActivity {
             httpPost.setHeader("Accept", "application/json");
 
             // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
+            httpResponse = httpclient.execute(httpPost);
+            statusCode = httpResponse.getStatusLine().getStatusCode();
 
             // 9. receive response as inputStream
             inputStream = httpResponse.getEntity().getContent();
@@ -170,6 +179,22 @@ public class EmployerRegisterActivity extends ActionBarActivity {
         protected void onPostExecute(String result) {
             //Toast.makeText(getBaseContext(), "Data Sent!", Toast.LENGTH_LONG).show();
 
+            if (statusCode == 201) {
+                Gson gson = new Gson();
+                Type hashType = new TypeToken<HashMap<String, Object>>() {}.getType();
+                HashMap userHash = gson.fromJson(result, hashType);
+                Double idDouble = (Double) userHash.get("id");
+                int id = idDouble.intValue();
+                String username = (String) userHash.get("username");
+                String email = (String) userHash.get("email");
+                String accountType = (String) userHash.get("account_type");
+                String authenticationToken = (String) userHash.get("authentication_token");
+                String passWord = pwText.getText().toString();
+                session.createUserLoginSession(id, username, email, accountType, passWord, authenticationToken);
+                //finish();
+            } else {
+                //set your edit text to display the error msg (E.g password too short or email invalid, according to the API response
+            }
         }
     }
 

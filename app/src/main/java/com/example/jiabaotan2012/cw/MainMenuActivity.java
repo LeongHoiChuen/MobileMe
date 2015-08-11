@@ -207,7 +207,7 @@ public class MainMenuActivity extends ActionBarActivity {
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(i);
 
-                    finish();
+                    //finish();
                 }else {
                     session.createUserLoginSession(id, username, email, accountType, passWord, authenticationToken);
                     // Starting MainActivity
@@ -217,7 +217,7 @@ public class MainMenuActivity extends ActionBarActivity {
                     // Add new Flag to start new Activity
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(i);
-                    finish();
+                    //finish();
 
                 }
             }

@@ -147,6 +147,8 @@ public class UserSessionManager {
         // Clearing all user data from Shared Preferences
         editor.clear();
         editor.commit();
+        //new HttpAsyncTask().execute("https://clockwork-api.herokuapp.com/users/sign_out.json");
+
 
         // After logout redirect user to Login Activity
         Intent i = new Intent(_context, MainMenuActivity.class);
