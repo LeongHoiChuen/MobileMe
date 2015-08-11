@@ -55,6 +55,17 @@ public class MainMenuActivity extends ActionBarActivity {
 
         //User Session Manager'
         session = new UserSessionManager(getApplicationContext());
+        //if(!session.isUserLoggedIn()) {
+            //Intent descriptionIntent = getIntent();
+        String status= session.getLogoutStatus();
+                    //descriptionIntent.getExtras().getString("status");
+        if (status.equals("user has been successfully signed out")) {
+            tx1.setText("You have successfully logged out!");
+        }
+        //}
+
+
+
         final Button button = (Button)findViewById(R.id.LoginButton);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,6 +100,16 @@ public class MainMenuActivity extends ActionBarActivity {
                 startActivity(addNewPost);
             }
         });
+
+        final Button tabbedButton = (Button) findViewById(R.id.tabbedButton);
+        tabbedButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent testTabbed = new Intent(view.getContext(), MainActivity.class);
+                startActivity(testTabbed);
+            }
+        });
+
 
     }
 
