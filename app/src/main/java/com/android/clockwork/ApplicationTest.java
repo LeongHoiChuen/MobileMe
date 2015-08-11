@@ -1,4 +1,4 @@
-package com.example.jiabaotan2012.cw;
+package com.android.clockwork;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

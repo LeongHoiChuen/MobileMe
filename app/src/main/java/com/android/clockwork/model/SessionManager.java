@@ -1,38 +1,29 @@
-package com.example.jiabaotan2012.cw;
+package com.android.clockwork.model;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.android.clockwork.view.activity.MainMenuActivity;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpDelete;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by Hoi Chuen on 10/8/2015.
  */
-public class UserSessionManager {
+public class SessionManager {
     // Shared Preferences reference
     SharedPreferences pref;
 
@@ -51,7 +42,7 @@ public class UserSessionManager {
     // All Shared Preferences Keys
     private static final String IS_USER_LOGIN = "IsUserLoggedIn";
 
-    // User name (make variable public to access from outside)
+    // Session name (make variable public to access from outside)
     public static final String KEY_NAME = "userName";
 
     // Email address (make variable public to access from outside)
@@ -68,7 +59,7 @@ public class UserSessionManager {
     String status = "";
 
     // Constructor
-    public UserSessionManager(Context context){
+    public SessionManager(Context context){
         this._context = context;
         pref = _context.getSharedPreferences(PREFER_NAME, PRIVATE_MODE);
         editor = pref.edit();

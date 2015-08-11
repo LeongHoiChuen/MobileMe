@@ -1,4 +1,4 @@
-package com.example.jiabaotan2012.cw;
+package com.android.clockwork.model;
 
 /**
  * Created by jiabao.tan.2012 on 26/7/2015.

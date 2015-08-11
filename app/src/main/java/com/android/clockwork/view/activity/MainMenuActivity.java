@@ -1,7 +1,8 @@
-package com.example.jiabaotan2012.cw;
+package com.android.clockwork.view.activity;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,17 +33,20 @@ import java.util.List;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import android.widget.Toast;
-
+import com.android.clockwork.controller.MainController;
+import com.android.clockwork.model.Session;
+import com.android.clockwork.model.SessionManager;
+import com.example.jiabaotan2012.cw.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-public class MainMenuActivity extends ActionBarActivity {
+public class MainMenuActivity extends AppCompatActivity {
+    final static MainController mainController = new MainController();
     static int statusCode;
     EditText ed1,ed2;
     TextView tx1;
-    User loginUser;
-    UserSessionManager session;
+    Session loginSession;
+    SessionManager session;
     static HttpResponse httpResponse;
 
     @Override
@@ -53,8 +57,8 @@ public class MainMenuActivity extends ActionBarActivity {
         ed2 = (EditText)findViewById(R.id.editText2);
         tx1 = (TextView)findViewById(R.id.resultText);
 
-        //User Session Manager'
-        session = new UserSessionManager(getApplicationContext());
+        //Session Session Manager'
+        session = new SessionManager(getApplicationContext());
         //if(!session.isUserLoggedIn()) {
             //Intent descriptionIntent = getIntent();
         String status= session.getLogoutStatus();
@@ -134,7 +138,7 @@ public class MainMenuActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
-    public static String POST(String url, User loginUser){
+    public static String POST(String url, Session loginSession){
         InputStream inputStream = null;
         String result = "";
         try {
@@ -152,8 +156,8 @@ public class MainMenuActivity extends ActionBarActivity {
 
             List<NameValuePair> pairs = new ArrayList<NameValuePair>();
 
-            pairs.add(new BasicNameValuePair("user[email]", loginUser.getEmail()));
-            pairs.add(new BasicNameValuePair("user[password]", loginUser.getPassword()));
+            pairs.add(new BasicNameValuePair("user[email]", loginSession.getEmail()));
+            pairs.add(new BasicNameValuePair("user[password]", loginSession.getPassword()));
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
@@ -196,9 +200,9 @@ public class MainMenuActivity extends ActionBarActivity {
         @Override
         protected String doInBackground(String... urls) {
 
-            loginUser = new User(ed1.getText().toString(), ed2.getText().toString());
+            loginSession = new Session(ed1.getText().toString(), ed2.getText().toString());
 
-            return POST(urls[0], loginUser);
+            return POST(urls[0], loginSession);
         }
 
         // onPostExecute displays the results of the AsyncTask.

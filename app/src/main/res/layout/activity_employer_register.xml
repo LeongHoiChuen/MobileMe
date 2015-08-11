@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primary"
-    tools:context="com.example.jiabaotan2012.cw.EmployerRegisterActivity">
+    tools:context="com.android.clockwork.view.activity.EmployerRegisterActivity">
 
     <include layout="@layout/header" />
     <include layout="@layout/footer" />

@@ -1,4 +1,4 @@
-package com.example.jiabaotan2012.cw;
+package com.android.clockwork.view.activity;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
@@ -7,6 +7,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+
+import com.example.jiabaotan2012.cw.R;
 
 
 public class RegisterTypeActivity extends ActionBarActivity {

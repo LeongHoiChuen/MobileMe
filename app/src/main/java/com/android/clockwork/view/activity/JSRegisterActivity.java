@@ -1,27 +1,30 @@
-package com.example.jiabaotan2012.cw;
+package com.android.clockwork.view.activity;
 
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.TextView;
 
+import com.android.clockwork.model.Account;
+import com.android.clockwork.model.SessionManager;
+import com.example.jiabaotan2012.cw.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONObject;
+import org.apache.http.message.BasicNameValuePair;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -32,24 +35,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.message.BasicNameValuePair;
 
-
-public class EmployerRegisterActivity extends ActionBarActivity {
-
+public class JSRegisterActivity extends AppCompatActivity {
     EditText emailText, nameText, pwText;
     Account account;
-    UserSessionManager session;
+    SessionManager session;
     static HttpResponse httpResponse;
     static int statusCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_employer_register);
-        session = new UserSessionManager(getApplicationContext());
+        setContentView(R.layout.activity_js_register);
+        session = new SessionManager(getApplicationContext());
 
         emailText = (EditText)findViewById(R.id.emailText);
         nameText = (EditText)findViewById(R.id.nameText);
@@ -61,8 +59,8 @@ public class EmployerRegisterActivity extends ActionBarActivity {
             public void onClick(View view) {
                 new HttpAsyncTask().execute("https://clockwork-api.herokuapp.com/users.json");
 
-                Intent jobListings = new Intent(view.getContext(), JobListsActivity.class);
-                startActivity(jobListings);
+                Intent editProfile = new Intent(view.getContext(), EditProfileActivity.class);
+                startActivity(editProfile);
             }
         });
     }
@@ -70,7 +68,7 @@ public class EmployerRegisterActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_register, menu);
+        getMenuInflater().inflate(R.menu.menu_jsregister, menu);
         return true;
     }
 
@@ -92,24 +90,15 @@ public class EmployerRegisterActivity extends ActionBarActivity {
     public static String POST(String url, Account account){
         InputStream inputStream = null;
         String result = "";
-        try {
 
+        try {
             // 1. create HttpClient
             HttpClient httpclient = new DefaultHttpClient();
 
             // 2. make POST request to the given URL
             HttpPost httpPost = new HttpPost(url);
 
-            String json = "";
-
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-            //jsonObject.accumulate("user[email]", account.getEmail());
-            //jsonObject.accumulate("user[username]", account.getName());
-            //jsonObject.accumulate("user[password]", account.getPassword());
-            //jsonObject.accumulate("user[password_confirmation]", account.getRepassword());
-            //jsonObject.accumulate("user[account_type]", account.getType());
-
+            // 3. build object to post
             List<NameValuePair> pairs = new ArrayList<NameValuePair>();
             pairs.add(new BasicNameValuePair("user[email]", account.getEmail()));
             pairs.add(new BasicNameValuePair("user[username]", account.getName()));
@@ -117,30 +106,20 @@ public class EmployerRegisterActivity extends ActionBarActivity {
             pairs.add(new BasicNameValuePair("user[password_confirmation]", account.getRepassword()));
             pairs.add(new BasicNameValuePair("user[account_type]", account.getType()));
 
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            //StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
+            // 4. set httpPost Entity
             httpPost.setEntity(new UrlEncodedFormEntity(pairs));
 
-            // 7. Set some headers to inform server about the type of the content
+            // 5. Set some headers to inform server about the type of the content
             httpPost.setHeader("Accept", "application/json");
 
-            // 8. Execute POST request to the given URL
+            // 6. Execute POST request to the given URL
             httpResponse = httpclient.execute(httpPost);
             statusCode = httpResponse.getStatusLine().getStatusCode();
 
-            // 9. receive response as inputStream
+            // 7. receive response as inputStream
             inputStream = httpResponse.getEntity().getContent();
 
-            // 10. convert inputstream to string
+            // 8. convert inputstream to string
             if(inputStream != null)
                 result = convertInputStreamToString(inputStream);
             else
@@ -150,7 +129,7 @@ public class EmployerRegisterActivity extends ActionBarActivity {
             Log.d("InputStream", e.getLocalizedMessage());
         }
 
-        // 11. return result
+        // 9. return result
         return result;
     }
 
@@ -158,7 +137,7 @@ public class EmployerRegisterActivity extends ActionBarActivity {
         @Override
         protected String doInBackground(String... urls) {
             account = new Account(emailText.getText().toString(), nameText.getText().toString(), pwText.getText().toString(),
-                    pwText.getText().toString(), "employer");
+                    pwText.getText().toString(), "job_seeker");
 
             return POST(urls[0], account);
         }

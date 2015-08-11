@@ -1,9 +1,9 @@
-package com.example.jiabaotan2012.cw;
+package com.android.clockwork.model;
 
 /**
  * Created by Hoi Chuen on 10/8/2015.
  */
-public class User {
+public class Session {
     private int id;
     private String userName;
     private String email;
@@ -11,12 +11,12 @@ public class User {
     private String accountType;
     private String authenticationToken;
 
-    public User (String email, String passWord) {
+    public Session(String email, String passWord) {
         this.email = email;
         this.passWord = passWord;
     }
 
-    public User(int id, String userName, String email, String accountType, String passWord, String authenticationToken) {
+    public Session(int id, String userName, String email, String accountType, String passWord, String authenticationToken) {
         this.id = id;
         this.userName = userName;
         this.email = email;

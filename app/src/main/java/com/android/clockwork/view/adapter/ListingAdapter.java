@@ -1,12 +1,10 @@
-package com.example.jiabaotan2012.cw;
+package com.android.clockwork.view.adapter;
 
 /**
  * Created by jiabao.tan.2012 on 2/8/2015.
  */
 
-import java.sql.Date;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import android.app.Activity;
 import android.content.Context;
@@ -14,9 +12,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.android.clockwork.model.Post;
+import com.example.jiabaotan2012.cw.R;
 
 public class ListingAdapter extends BaseAdapter {
 

@@ -1,6 +1,5 @@
-package com.example.jiabaotan2012.cw;
+package com.android.clockwork.view.activity;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -12,11 +11,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.clockwork.view.adapter.ListingAdapter;
+import com.android.clockwork.model.Post;
+import com.android.clockwork.model.SessionManager;
+import com.example.jiabaotan2012.cw.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -24,7 +26,6 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -41,7 +42,7 @@ public class JobListsActivity extends ActionBarActivity {
     ListingAdapter listingAdapter;
     ArrayList<Post> postList;
     ProgressDialog dialog;
-    UserSessionManager session;
+    SessionManager session;
     Button btnLogout;
 
     @Override
@@ -51,12 +52,12 @@ public class JobListsActivity extends ActionBarActivity {
         new HttpAsyncTask().execute("https://clockwork-api.herokuapp.com/api/v1/posts/all.json");
 
         // Session class instance
-        session = new UserSessionManager(getApplicationContext());
+        session = new SessionManager(getApplicationContext());
         TextView welcomeMsg = (TextView) findViewById(R.id.welcomeMessage);
         // Button logout
         btnLogout = (Button) findViewById(R.id.logoutButton);
         // Check user login (this is the important point)
-        // If User is not logged in , This will redirect user to LoginActivity
+        // If Session is not logged in , This will redirect user to LoginActivity
         // and finish current activity from activity stack.
         if(session.checkLogin()) {
 
@@ -67,7 +68,7 @@ public class JobListsActivity extends ActionBarActivity {
         HashMap<String, String> user = session.getUserDetails();
 
         // get name
-        String name = user.get(UserSessionManager.KEY_NAME);
+        String name = user.get(SessionManager.KEY_NAME);
 
 
         // Show user data on activity
@@ -78,7 +79,7 @@ public class JobListsActivity extends ActionBarActivity {
             @Override
             public void onClick(View arg0) {
 
-                // Clear the User session data
+                // Clear the Session session data
                 // and redirect user to LoginActivity
                 session.logoutUser();
                 Context context = getApplicationContext();

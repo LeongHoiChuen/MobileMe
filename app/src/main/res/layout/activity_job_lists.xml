@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grey"
-    tools:context="com.example.jiabaotan2012.cw.JobListsActivity">
+    tools:context="com.android.clockwork.view.activity.JobListsActivity">
     <ListView
         android:id="@+id/list"
         android:layout_width="fill_parent"
