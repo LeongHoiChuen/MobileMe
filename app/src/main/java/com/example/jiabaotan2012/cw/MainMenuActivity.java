@@ -221,7 +221,7 @@ public class MainMenuActivity extends ActionBarActivity {
                 }else {
                     session.createUserLoginSession(id, username, email, accountType, passWord, authenticationToken);
                     // Starting MainActivity
-                    Intent i = new Intent(getApplicationContext(), RegisterTypeActivity.class);
+                    Intent i = new Intent(getApplicationContext(), JobListsActivity.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
                     // Add new Flag to start new Activity
