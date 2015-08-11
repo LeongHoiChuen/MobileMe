@@ -3,8 +3,31 @@ package com.example.jiabaotan2012.cw;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
+import android.util.Log;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by Hoi Chuen on 10/8/2015.
@@ -41,6 +64,8 @@ public class UserSessionManager {
     public static final String KEY_PASSWORD = "passWord" ;
 
     public static final String KEY_ID = "id" ;
+
+    String status = "";
 
     // Constructor
     public UserSessionManager(Context context){
@@ -138,6 +163,9 @@ public class UserSessionManager {
         return user;
     }
 
+    public String getLogoutStatus () {
+        return status;
+    }
 
     /**
      * Clear session details
@@ -147,25 +175,113 @@ public class UserSessionManager {
         // Clearing all user data from Shared Preferences
         editor.clear();
         editor.commit();
-        //new HttpAsyncTask().execute("https://clockwork-api.herokuapp.com/users/sign_out.json");
-
-
-        // After logout redirect user to Login Activity
-        Intent i = new Intent(_context, MainMenuActivity.class);
-
-        // Closing all the Activities
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-        // Add new Flag to start new Activity
-        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-        // Staring Login Activity
-        _context.startActivity(i);
+        new HttpAsyncTask().execute("https://clockwork-api.herokuapp.com/users/sign_out.json");
     }
 
     // Check for login
     public boolean isUserLoggedIn(){
 
         return pref.getBoolean(IS_USER_LOGIN, false);
+    }
+
+    public static String DELETE(String url){
+        InputStream inputStream = null;
+        String result = "";
+        try {
+
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make Delete request to the given URL
+            HttpDelete httpDelete = new HttpDelete(url);
+
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+
+            //List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+
+            //pairs.add(new BasicNameValuePair("user[email]", loginUser.getEmail()));
+           // pairs.add(new BasicNameValuePair("user[password]", loginUser.getPassword()));
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            //StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            //httpPost.setEntity(new UrlEncodedFormEntity(pairs));
+
+            // 7. Set some headers to inform server about the type of the content
+            httpDelete.setHeader("Accept", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpDelete);
+            //statusCode = httpResponse.getStatusLine().getStatusCode();
+
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+            // 10. convert inputstream to string
+            if(inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+    private class HttpAsyncTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... urls) {
+
+            return DELETE(urls[0]);
+        }
+
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result) {
+            //Gson gson = new Gson();
+            //Type hashType = new TypeToken<HashMap<String, Object>>(){}.getType();
+            //HashMap userHash = gson.fromJson(result, hashType);
+            //String successfulLogout = (String)userHash.get("message");
+            status = result;
+
+            // After logout redirect user to Login Activity
+            //Intent i = new Intent(_context, MainMenuActivity.class);
+
+            // Closing all the Activities
+            //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+            // Add new Flag to start new Activity
+            //i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            //i.putExtra("status",status);
+            // Staring Login Activity
+           // _context.startActivity(i);
+
+        }
+    }
+
+    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
+        String line = "";
+        String result = "";
+        while((line = bufferedReader.readLine()) != null)
+            result += line;
+
+        inputStream.close();
+        return result;
+
     }
 }

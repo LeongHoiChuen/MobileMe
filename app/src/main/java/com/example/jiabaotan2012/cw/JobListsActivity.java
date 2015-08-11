@@ -2,6 +2,7 @@ package com.example.jiabaotan2012.cw;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -80,6 +81,9 @@ public class JobListsActivity extends ActionBarActivity {
                 // Clear the User session data
                 // and redirect user to LoginActivity
                 session.logoutUser();
+                Context context = getApplicationContext();
+                String status = session.getLogoutStatus();
+                Toast.makeText(context, status, Toast.LENGTH_LONG).show();
             }
         });
 
