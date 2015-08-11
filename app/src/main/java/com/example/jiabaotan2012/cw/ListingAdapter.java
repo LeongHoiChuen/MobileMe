@@ -49,7 +49,6 @@ public class ListingAdapter extends BaseAdapter {
         TextView salary = (TextView) view.findViewById(R.id.salary);
         ImageView locationImage = (ImageView) view.findViewById(R.id.locationImage);
         TextView location = (TextView) view.findViewById(R.id.location);
-        Button detailsBtn = (Button) view.findViewById(R.id.detailsBtn);
 
         // set text
         jobTitle.setText(p.getHeader());
