@@ -3,23 +3,35 @@ package com.example.jiabaotan2012.cw;
 /**
  * Created by jiabao.tan.2012 on 2/8/2015.
  */
-import java.util.Date;
 
 public class Post {
+    private int id;
     private String header;
     private String company;
     private int salary;
     private String description;
     private String location;
-    private String jobDate;
+    private String posting_Date;
+    private String job_Date;
 
-    public Post(String header, String company, int salary, String description, String location, String jobDate) {
+    public Post(int id, String header, String company, int salary, String description, String location, String posting_Date, String job_Date) {
+        this.id = id;
         this.header = header;
         this.company = company;
         this.salary = salary;
         this.description = description;
         this.location = location;
-        this.jobDate = jobDate;
+        this.posting_Date = posting_Date;
+        this.job_Date = job_Date;
+    }
+
+    public Post(String header, String company, int salary, String description, String location, String job_Date) {
+        this.header = header;
+        this.company = company;
+        this.salary = salary;
+        this.description = description;
+        this.location = location;
+        this.job_Date = job_Date;
     }
 
     public String getHeader() {
@@ -63,10 +75,26 @@ public class Post {
     }
 
     public String getJobDate() {
-        return jobDate;
+        return job_Date;
     }
 
     public void setJobDate(String jobDate) {
-        this.jobDate = jobDate;
+        this.job_Date = jobDate;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getPosting_Date() {
+        return posting_Date;
+    }
+
+    public void setPosting_Date(String posting_Date) {
+        this.posting_Date = posting_Date;
     }
 }

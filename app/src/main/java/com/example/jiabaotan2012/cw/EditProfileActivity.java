@@ -42,7 +42,7 @@ public class EditProfileActivity extends ActionBarActivity implements View.OnCli
     SimpleDateFormat sdf;
     UserSessionManager session;
     HashMap<String, String> user;
-    String email, authToken;
+    String email, authToken, username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +51,7 @@ public class EditProfileActivity extends ActionBarActivity implements View.OnCli
 
         session = new UserSessionManager(getApplicationContext());
         user = session.getUserDetails();
+        username = user.get(UserSessionManager.KEY_NAME);
         email = user.get(UserSessionManager.KEY_EMAIL);
         authToken = user.get(UserSessionManager.KEY_AUTHENTICATIONTOKEN);
 
@@ -67,7 +68,7 @@ public class EditProfileActivity extends ActionBarActivity implements View.OnCli
             @Override
             public void onClick(View view) {
                 // update new account details using PUT
-                new HttpAsyncTask().execute("https://clockwork-api.herokuapp.com/users.json");
+                new HttpAsyncTask().execute("https://clockwork-api.herokuapp.com/api/v1/users/update");
 
                 Intent listingIntent = new Intent(view.getContext(), JobListsActivity.class);
                 startActivity(listingIntent);
@@ -123,23 +124,24 @@ public class EditProfileActivity extends ActionBarActivity implements View.OnCli
             HttpClient httpclient = new DefaultHttpClient();
 
             // 2. make POST request to the given URL
-            HttpPut httpPut = new HttpPut(url);
+            HttpPost httpPost = new HttpPost(url);
 
             // 3. build NVP
             List<NameValuePair> nvps = new ArrayList<NameValuePair>();
-            nvps.add(new BasicNameValuePair("user[email]", email));
-            nvps.add(new BasicNameValuePair("user[address]", addrText.getText().toString()));
-            nvps.add(new BasicNameValuePair("user[contact_number]", numText.getText().toString()));
-            nvps.add(new BasicNameValuePair("user[date_of_birth]", "" + dateText.getText().toString()));
+            nvps.add(new BasicNameValuePair("email", email));
+            nvps.add(new BasicNameValuePair("username", username));
+            nvps.add(new BasicNameValuePair("address", addrText.getText().toString()));
+            nvps.add(new BasicNameValuePair("contact_number", numText.getText().toString()));
+            nvps.add(new BasicNameValuePair("date_of_birth", "" + dateText.getText().toString()));
 
             // 4. set httpPost Entity
-            httpPut.setEntity(new UrlEncodedFormEntity(nvps));
+            httpPost.setEntity(new UrlEncodedFormEntity(nvps));
 
             // 5. Set some headers to inform server about the type of the content
-            httpPut.setHeader("Authentication-Token", authToken);
+            httpPost.setHeader("Authentication-Token", authToken);
 
             // 6. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPut);
+            HttpResponse httpResponse = httpclient.execute(httpPost);
 
             // 7. receive response as inputStream
             inputStream = httpResponse.getEntity().getContent();
