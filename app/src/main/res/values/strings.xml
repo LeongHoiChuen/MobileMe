@@ -11,5 +11,6 @@
     <string name="title_activity_add_new_post">AddNewPostActivity</string>
     <string name="title_activity_register_type">RegisterTypeActivity</string>
     <string name="title_activity_jsregister">JSRegisterActivity</string>
+    <string name="title_activity_edit_profile">EditProfileActivity</string>
 
 </resources>

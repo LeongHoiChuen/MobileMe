@@ -55,7 +55,7 @@ public class ListingAdapter extends BaseAdapter {
         jobTitle.setText(p.getHeader());
         hiringCo.setText(p.getCompany());
         startDate.setText("" + p.getJobDate());
-        salary.setText("" + p.getSalary());
+        salary.setText("$ " + p.getSalary() + " per hour");
 
         location.setText(p.getLocation());
 

@@ -39,6 +39,10 @@
             android:name=".JSRegisterActivity"
             android:label="@string/title_activity_jsregister" >
         </activity>
+        <activity
+            android:name=".EditProfileActivity"
+            android:label="@string/title_activity_edit_profile" >
+        </activity>
     </application>
 
 </manifest>

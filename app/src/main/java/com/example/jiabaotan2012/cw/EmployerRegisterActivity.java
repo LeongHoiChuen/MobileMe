@@ -39,10 +39,7 @@ import org.apache.http.message.BasicNameValuePair;
 
 public class EmployerRegisterActivity extends ActionBarActivity {
 
-    EditText emailText, nameText, pwText, repwText;
-    TextView errorText;
-    RadioGroup typeGroup;
-    RadioButton acctType;
+    EditText emailText, nameText, pwText;
     Account account;
     UserSessionManager session;
     static HttpResponse httpResponse;
@@ -52,6 +49,7 @@ public class EmployerRegisterActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_employer_register);
+        session = new UserSessionManager(getApplicationContext());
 
         emailText = (EditText)findViewById(R.id.emailText);
         nameText = (EditText)findViewById(R.id.nameText);
@@ -61,8 +59,6 @@ public class EmployerRegisterActivity extends ActionBarActivity {
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int selectedId = typeGroup.getCheckedRadioButtonId();
-                acctType = (RadioButton) findViewById(selectedId);
                 new HttpAsyncTask().execute("https://clockwork-api.herokuapp.com/users.json");
 
                 Intent jobListings = new Intent(view.getContext(), JobListsActivity.class);
@@ -161,16 +157,8 @@ public class EmployerRegisterActivity extends ActionBarActivity {
     private class HttpAsyncTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... urls) {
-            String accountType = "";
-
-            if (true) {
-                accountType = "employer";
-            } else {
-                accountType = "job_seeker";
-            }
-
             account = new Account(emailText.getText().toString(), nameText.getText().toString(), pwText.getText().toString(),
-                    repwText.getText().toString(), accountType);
+                    pwText.getText().toString(), "employer");
 
             return POST(urls[0], account);
         }
