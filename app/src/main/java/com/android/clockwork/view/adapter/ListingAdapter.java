@@ -38,7 +38,7 @@ public class ListingAdapter extends BaseAdapter {
         }
 
         if (convertView == null) {
-            view = inflater.inflate(R.layout.list_row, null);
+            view = inflater.inflate(R.layout.job_listing_row, null);
         }
 
         Post p = postList.get(position);

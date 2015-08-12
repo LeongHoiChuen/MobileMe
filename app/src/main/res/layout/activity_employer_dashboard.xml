@@ -1,0 +1,30 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:background="@color/grey"
+    tools:context="com.android.clockwork.view.activity.EmployerDashboardActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_centerHorizontal="true">
+
+        <include layout="@layout/header" />
+
+        <Button
+            android:background="@drawable/primary_button"
+            android:layout_centerInParent="true"
+            android:text="+ Add New Job"
+            android:id="@+id/addPostButton"
+            style="@style/button_text" />
+
+        <ListView
+            android:id="@+id/publishedList"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:divider="@null"
+            android:dividerHeight="0dp" />
+
+    </LinearLayout>
+</RelativeLayout>

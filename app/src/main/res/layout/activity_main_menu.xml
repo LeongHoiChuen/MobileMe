@@ -111,6 +111,20 @@
         android:text="New Button"
         android:id="@+id/tabbedButton"
         android:layout_above="@+id/LoginButton"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignLeft="@+id/RegisterButton"
+        android:layout_alignStart="@+id/RegisterButton"
+        android:layout_alignRight="@+id/RegisterButton"
+        android:layout_alignEnd="@+id/RegisterButton" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Emp DB"
+        android:id="@+id/dashboardButton"
+        android:layout_alignTop="@+id/tabbedButton"
+        android:layout_alignRight="@+id/LoginButton"
+        android:layout_alignEnd="@+id/LoginButton"
+        android:layout_alignLeft="@+id/LoginButton"
+        android:layout_alignStart="@+id/LoginButton" />
 
 </RelativeLayout>

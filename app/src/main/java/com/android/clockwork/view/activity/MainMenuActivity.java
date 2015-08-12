@@ -112,6 +112,15 @@ public class MainMenuActivity extends AppCompatActivity {
             }
         });
 
+        final Button dashboardButton = (Button) findViewById(R.id.dashboardButton);
+        dashboardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent empDashboard = new Intent(view.getContext(), EmployerDashboardActivity.class);
+                startActivity(empDashboard);
+            }
+        });
+
     }
 
     @Override

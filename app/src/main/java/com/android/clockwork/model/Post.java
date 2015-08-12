@@ -34,6 +34,14 @@ public class Post {
         this.job_date = job_date;
     }
 
+    public Post(String header, int salary, String description, String location, String job_date) {
+        this.header = header;
+        this.salary = salary;
+        this.description = description;
+        this.location = location;
+        this.job_date = job_date;
+    }
+
     public String getHeader() {
         return header;
     }
