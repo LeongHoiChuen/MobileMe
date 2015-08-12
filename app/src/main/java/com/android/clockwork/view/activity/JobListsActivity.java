@@ -67,10 +67,10 @@ public class JobListsActivity extends AppCompatActivity {
         // Check user login (this is the important point)
         // If Session is not logged in , This will redirect user to LoginActivity
         // and finish current activity from activity stack.
-        if(session.checkLogin()) {
+ /*       if(session.checkLogin()) {
 
             finish();
-        }
+        }*/
 
         // get user data from session
         HashMap<String, String> user = session.getUserDetails();
@@ -90,9 +90,9 @@ public class JobListsActivity extends AppCompatActivity {
                 // Clear the Session session data
                 // and redirect user to LoginActivity
                 session.logoutUser();
-                Context context = getApplicationContext();
-                String status = session.getLogoutStatus();
-                Toast.makeText(context, status, Toast.LENGTH_LONG).show();
+                //Context context = getApplicationContext();
+                //String status = session.getLogoutStatus();
+                //Toast.makeText(context, status, Toast.LENGTH_LONG).show();
             }
         });
 

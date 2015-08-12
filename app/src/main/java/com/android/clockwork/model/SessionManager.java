@@ -166,7 +166,19 @@ public class SessionManager {
         // Clearing all user data from Shared Preferences
         editor.clear();
         editor.commit();
-        new HttpAsyncTask().execute("https://clockwork-api.herokuapp.com/users/sign_out.json");
+        // After logout redirect user to Login Activity
+        Intent i = new Intent(_context, MainMenuActivity.class);
+
+        // Closing all the Activities
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+        // Add new Flag to start new Activity
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        // Staring Login Activity
+        _context.startActivity(i);
+
+
+        //new HttpAsyncTask().execute("https://clockwork-api.herokuapp.com/users/sign_out.json");
     }
 
     // Check for login
@@ -186,36 +198,12 @@ public class SessionManager {
             // 2. make Delete request to the given URL
             HttpDelete httpDelete = new HttpDelete(url);
 
-            String json = "";
-
             // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
 
-            //List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-
-            //pairs.add(new BasicNameValuePair("user[email]", loginUser.getEmail()));
-           // pairs.add(new BasicNameValuePair("user[password]", loginUser.getPassword()));
-
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            //StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            //httpPost.setEntity(new UrlEncodedFormEntity(pairs));
-
-            // 7. Set some headers to inform server about the type of the content
             httpDelete.setHeader("Accept", "application/json");
 
             // 8. Execute POST request to the given URL
             HttpResponse httpResponse = httpclient.execute(httpDelete);
-            //statusCode = httpResponse.getStatusLine().getStatusCode();
-
 
             // 9. receive response as inputStream
             inputStream = httpResponse.getEntity().getContent();
@@ -233,6 +221,7 @@ public class SessionManager {
         // 11. return result
         return result;
     }
+
     private class HttpAsyncTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... urls) {
@@ -248,18 +237,6 @@ public class SessionManager {
             //HashMap userHash = gson.fromJson(result, hashType);
             //String successfulLogout = (String)userHash.get("message");
             status = result;
-
-            // After logout redirect user to Login Activity
-            //Intent i = new Intent(_context, MainMenuActivity.class);
-
-            // Closing all the Activities
-            //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-            // Add new Flag to start new Activity
-            //i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            //i.putExtra("status",status);
-            // Staring Login Activity
-           // _context.startActivity(i);
 
         }
     }
