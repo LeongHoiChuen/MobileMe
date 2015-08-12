@@ -43,7 +43,6 @@ public class JobListsActivity extends AppCompatActivity {
     ArrayList<Post> postList;
     ProgressDialog dialog;
     SessionManager session;
-    Button btnLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +60,9 @@ public class JobListsActivity extends AppCompatActivity {
         });
         // Session class instance
         session = new SessionManager(getApplicationContext());
-        TextView welcomeMsg = (TextView) findViewById(R.id.welcomeMessage);
+
         // Button logout
-        btnLogout = (Button) findViewById(R.id.logoutButton);
+
         // Check user login (this is the important point)
         // If Session is not logged in , This will redirect user to LoginActivity
         // and finish current activity from activity stack.
@@ -77,26 +76,6 @@ public class JobListsActivity extends AppCompatActivity {
 
         // get name
         String name = user.get(SessionManager.KEY_NAME);
-
-
-        // Show user data on activity
-        welcomeMsg.setText(Html.fromHtml("Welcome <b>" + name + "</b>"));
-
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-
-                // Clear the Session session data
-                // and redirect user to LoginActivity
-                session.logoutUser();
-                //Context context = getApplicationContext();
-                //String status = session.getLogoutStatus();
-                //Toast.makeText(context, status, Toast.LENGTH_LONG).show();
-            }
-        });
-
-
     }
 
     @Override
