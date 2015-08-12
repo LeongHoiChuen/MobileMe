@@ -61,7 +61,18 @@ public class JobListsActivity extends AppCompatActivity {
         // Session class instance
         session = new SessionManager(getApplicationContext());
 
-        // Button logout
+/*        // Button logout
+        Button btnLogout = (Button) findViewById(R.id.logoutButton);;
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+
+                // Clear the User session data
+                // and redirect user to LoginActivity
+                session.logoutUser();
+            }
+        });*/
 
         // Check user login (this is the important point)
         // If Session is not logged in , This will redirect user to LoginActivity

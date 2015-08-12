@@ -236,7 +236,7 @@ public class MainMenuActivity extends AppCompatActivity {
                 }else {
                     session.createUserLoginSession(id, username, email, accountType, passWord, authenticationToken);
                     // Starting MainActivity
-                    Intent i = new Intent(getApplicationContext(), JobListsActivity.class);
+                    Intent i = new Intent(getApplicationContext(), EmployerDashboardActivity.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
                     // Add new Flag to start new Activity

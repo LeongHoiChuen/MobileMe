@@ -69,16 +69,7 @@
         android:layout_alignParentStart="true"
         android:textSize="25dp" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="login"
-        android:id="@+id/LoginButton"
-        android:layout_above="@+id/ListingButton"
-        android:layout_alignLeft="@+id/ListingButton"
-        android:layout_alignStart="@+id/ListingButton" />
-
-    <Button
+     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="View"
@@ -112,5 +103,14 @@
         android:layout_alignTop="@+id/RegisterButton"
         android:layout_alignRight="@+id/textView"
         android:layout_alignEnd="@+id/textView" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="login"
+        android:id="@+id/LoginButton"
+        android:layout_below="@+id/resultText"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
