@@ -1,6 +1,7 @@
 package com.android.clockwork.view.activity;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -75,6 +76,8 @@ public class AddNewPostActivity extends ActionBarActivity implements View.OnClic
             public void onClick(View view) {
                 //submit new job post
                 new HttpAsyncTask().execute("https://clockwork-api.herokuapp.com/api/v1/posts/new");
+                Intent jobListing = new Intent(view.getContext(), JobListsActivity.class);
+                startActivity(jobListing);
             }
         });
     }
