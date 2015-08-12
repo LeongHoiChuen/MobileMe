@@ -19,12 +19,18 @@
             android:id="@+id/addPostButton"
             style="@style/button_text" />
 
-        <ListView
-            android:id="@+id/publishedList"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:divider="@null"
-            android:dividerHeight="0dp" />
+        <LinearLayout
+            android:layout_alignParentTop="true"
+            android:layout_width="match_parent"
+            android:layout_height="375dp"
+            android:gravity="center">
+            <ListView
+                android:id="@+id/publishedList"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:divider="@null"
+                android:dividerHeight="0dp"/>
+        </LinearLayout>
 
     </LinearLayout>
     <include layout="@layout/footer" />

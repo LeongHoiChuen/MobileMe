@@ -4,14 +4,29 @@
     android:background="@color/grey"
     tools:context="com.android.clockwork.view.activity.JobListsActivity">
 
-        <include layout="@layout/footer"
-            android:id="@+id/footer"/>
-
-    <ListView
-        android:id="@+id/list"
-        android:layout_width="fill_parent"
+    <LinearLayout
+        android:id="@+id/footer"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:divider="@null"
-        android:dividerHeight="0dp"/>
+        android:gravity="center">
 
+        <include layout="@layout/footer"
+            android:layout_height="fill_parent"
+            android:layout_width="fill_parent"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_alignParentTop="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_below="@id/footer">
+        <ListView
+            android:id="@+id/list"
+            android:layout_width="wrap_content"
+            android:layout_height="513dp"
+            android:divider="@null"
+            android:dividerHeight="0dp"/>
+    </LinearLayout>
 </RelativeLayout>
