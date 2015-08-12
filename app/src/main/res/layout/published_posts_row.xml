@@ -22,7 +22,6 @@
             android:paddingRight="8dp"
 
             >
-
             <!-- Job Title -->
             <TextView
                 android:id="@+id/jobTitle"
@@ -34,33 +33,33 @@
                 android:textSize="20dip"
                 android:textStyle="bold"/>
 
-            <!-- Hiring Company -->
+            <!-- Job Start Date -->
             <TextView
-                android:id="@+id/date"
+                android:id="@+id/jobDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#343434"
                 android:textSize="15dip"
-                android:text="startdate"
+                android:text="START DATE OF JOB"
                 android:layout_below="@+id/jobTitle"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
-
-            <!-- Start Date -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="START DATE"
-                android:textColor="@color/pink"
-                android:textSize="15dip"
-                android:id="@+id/startDate"
-                android:layout_below="@+id/date"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true" />
 
             <!-- Salary -->
             <TextView
-                android:id="@+id/status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SALARY"
+                android:textColor="@color/pink"
+                android:textSize="20dip"
+                android:id="@+id/salary"
+                android:layout_below="@+id/jobDate"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <!-- Number of Applicants -->
+            <TextView
+                android:id="@+id/numApplicants"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="right"
@@ -68,12 +67,19 @@
                 android:textSize="15dip"
                 android:textColor="@color/pink"
                 android:textStyle="bold"
-                android:layout_centerVertical="true"
+                android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
 
-            <!-- Location Image -->
-
+            <!-- Edit Button -->
+            <Button
+                android:background="@drawable/primary_button"
+                android:text="Edit"
+                android:id="@+id/editButton"
+                style="@style/small_button"
+                android:layout_below="@+id/numApplicants"
+                android:layout_alignRight="@+id/numApplicants"
+                android:layout_alignEnd="@+id/numApplicants" />
             <!-- Location Text -->
 
         </RelativeLayout>

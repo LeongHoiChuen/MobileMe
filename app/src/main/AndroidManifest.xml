@@ -47,8 +47,10 @@
             android:name="com.android.clockwork.view.activity.MainActivity"
             android:label="@string/title_activity_main" >
         </activity>
-
-
+        <activity
+            android:name="com.android.clockwork.view.activity.EmployerDashboardActivity"
+            android:label="@string/title_activity_employer_dashboard" >
+        </activity>
     </application>
 
 </manifest>

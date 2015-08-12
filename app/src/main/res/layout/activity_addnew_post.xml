@@ -130,6 +130,7 @@
                     android:id="@+id/salary"
                     android:inputType="number"
                     android:hint="Salary per hour"
+                    android:textSize="15sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </LinearLayout>

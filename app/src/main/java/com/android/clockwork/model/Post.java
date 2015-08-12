@@ -11,27 +11,35 @@ public class Post {
     private int salary;
     private String description;
     private String location;
-    private String posting_Date;
-    private String job_Date;
+    private String posting_date;
+    private String job_date;
 
-    public Post(int id, String header, String company, int salary, String description, String location, String posting_Date, String job_Date) {
+    public Post(int id, String header, String company, int salary, String description, String location, String posting_date, String job_date) {
         this.id = id;
         this.header = header;
         this.company = company;
         this.salary = salary;
         this.description = description;
         this.location = location;
-        this.posting_Date = posting_Date;
-        this.job_Date = job_Date;
+        this.posting_date = posting_date;
+        this.job_date = job_date;
     }
 
-    public Post(String header, String company, int salary, String description, String location, String job_Date) {
+    public Post(String header, String company, int salary, String description, String location, String job_date) {
         this.header = header;
         this.company = company;
         this.salary = salary;
         this.description = description;
         this.location = location;
-        this.job_Date = job_Date;
+        this.job_date = job_date;
+    }
+
+    public Post(String header, int salary, String description, String location, String job_date) {
+        this.header = header;
+        this.salary = salary;
+        this.description = description;
+        this.location = location;
+        this.job_date = job_date;
     }
 
     public String getHeader() {
@@ -75,11 +83,11 @@ public class Post {
     }
 
     public String getJobDate() {
-        return job_Date;
+        return job_date;
     }
 
-    public void setJobDate(String jobDate) {
-        this.job_Date = jobDate;
+    public void setJobDate(String jobdate) {
+        this.job_date = jobdate;
     }
 
     public int getId() {
@@ -91,10 +99,10 @@ public class Post {
     }
 
     public String getPosting_Date() {
-        return posting_Date;
+        return posting_date;
     }
 
     public void setPosting_Date(String posting_Date) {
-        this.posting_Date = posting_Date;
+        this.posting_date = posting_Date;
     }
 }

@@ -1,28 +1,31 @@
 package com.android.clockwork.view.activity;
 
-import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.ListView;
 
 import com.android.clockwork.model.Post;
 import com.android.clockwork.model.SessionManager;
+import com.android.clockwork.view.adapter.ListingAdapter;
+import com.android.clockwork.view.adapter.PublishedAdapter;
 import com.example.jiabaotan2012.cw.R;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
@@ -31,75 +34,53 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.text.SimpleDateFormat;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
-
-public class AddNewPostActivity extends ActionBarActivity implements View.OnClickListener {
-
-    EditText jobTitle, jobLocation, jobDescription, salary, jobDate;
-    Button submitBtn;
-    DatePickerDialog datePickerDialog;
-    SimpleDateFormat sdf;
-    Post post;
+public class EmployerDashboardActivity extends AppCompatActivity {
+    ProgressDialog dialog;
+    ListView publishedList;
+    PublishedAdapter publishedAdapter;
+    ArrayList<Post> postList;
     SessionManager session;
     HashMap<String, String> user;
-    String name, email, authToken;
+    String email, authToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_addnew_post);
+        setContentView(R.layout.activity_employer_dashboard);
+        new HttpAsyncTask().execute("https://clockwork-api.herokuapp.com/api/v1/users/get_jobs");
 
         session = new SessionManager(getApplicationContext());
         user = session.getUserDetails();
-        name = user.get(SessionManager.KEY_NAME);
         email = user.get(SessionManager.KEY_EMAIL);
         authToken = user.get(SessionManager.KEY_AUTHENTICATIONTOKEN);
 
-        jobTitle = (EditText) findViewById(R.id.jobTitle);
-        jobLocation = (EditText) findViewById(R.id.jobLocation);
-        jobDescription = (EditText) findViewById(R.id.jobDescription);
-        salary = (EditText) findViewById(R.id.salary);
-        jobDate = (EditText) findViewById(R.id.jobDate);
-        jobDate.setInputType(InputType.TYPE_NULL);
-
-        sdf = new SimpleDateFormat("dd-MM-yyy");
-        setDateTimeField();
-
-        submitBtn = (Button) findViewById(R.id.submitBtn);
-        submitBtn.setOnClickListener(new View.OnClickListener() {
+        publishedList = (ListView) findViewById(R.id.publishedList);
+        publishedList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View view) {
-                //submit new job post
-                new HttpAsyncTask().execute("https://clockwork-api.herokuapp.com/api/v1/posts/new");
-                Intent empDashboard = new Intent(view.getContext(), EmployerDashboardActivity.class);
-                startActivity(empDashboard);
+            public void onItemClick(AdapterView adptView, View view, int position, long arg3) {
+                // edit post link
             }
         });
-    }
 
-    private void setDateTimeField() {
-        jobDate.setOnClickListener(this);
-        Calendar newCalendar = Calendar.getInstance();
-        datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                Calendar newDate = Calendar.getInstance();
-                newDate.set(year, monthOfYear, dayOfMonth);
-                jobDate.setText(sdf.format(newDate.getTime()));
+        final Button addPostButton = (Button) findViewById(R.id.addPostButton);
+        addPostButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent addNewPost = new Intent(view.getContext(), AddNewPostActivity.class);
+                startActivity(addNewPost);
             }
-
-        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+        });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_add_new_post, menu);
+        getMenuInflater().inflate(R.menu.menu_employer_dashboard, menu);
         return true;
     }
 
@@ -118,12 +99,18 @@ public class AddNewPostActivity extends ActionBarActivity implements View.OnClic
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onClick(View v) {
-        datePickerDialog.show();
-    }
-
     private class HttpAsyncTask extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog = new ProgressDialog(EmployerDashboardActivity.this);
+            dialog.setTitle("Retrieving your published jobs");
+            dialog.setMessage("Loading...");
+            dialog.setIndeterminate(false);
+            dialog.show();
+        }
+
         @Override
         protected String doInBackground(String... urls) {
             return POST(urls[0]);
@@ -131,7 +118,14 @@ public class AddNewPostActivity extends ActionBarActivity implements View.OnClic
         // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result) {
-            //Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
+            Gson gson = new Gson();
+            Type listType = new TypeToken<ArrayList<Post>>(){}.getType();
+            postList = gson.fromJson(result, listType);
+
+            publishedAdapter = new PublishedAdapter(EmployerDashboardActivity.this, postList);
+
+            publishedList.setAdapter(publishedAdapter);
+            dialog.dismiss();
         }
     }
 
@@ -146,15 +140,7 @@ public class AddNewPostActivity extends ActionBarActivity implements View.OnClic
             HttpPost httpPost = new HttpPost(url);
 
             // 3. build NVP
-            post = new Post(jobTitle.getText().toString(), Integer.parseInt(salary.getText().toString()),
-                    jobDescription.getText().toString(), jobLocation.getText().toString(), jobDate.getText().toString());
             List<NameValuePair> nvps = new ArrayList<NameValuePair>();
-            nvps.add(new BasicNameValuePair("header", post.getHeader()));
-            nvps.add(new BasicNameValuePair("company", name));
-            nvps.add(new BasicNameValuePair("salary", "" + post.getSalary()));
-            nvps.add(new BasicNameValuePair("description", post.getDescription()));
-            nvps.add(new BasicNameValuePair("location", post.getLocation()));
-            nvps.add(new BasicNameValuePair("job_date", post.getJobDate()));
             nvps.add(new BasicNameValuePair("email", email));
 
             // 4. set httpPost Entity
