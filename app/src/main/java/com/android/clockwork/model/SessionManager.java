@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.android.clockwork.view.activity.JobListsActivity;
 import com.android.clockwork.view.activity.MainMenuActivity;
 
 import org.apache.http.HttpResponse;
@@ -104,6 +105,8 @@ public class SessionManager {
             // user is not logged in redirect him to Login Activity
             Intent i = new Intent(_context, MainMenuActivity.class);
 
+            status = "notLoggedIn";
+
             // Closing all the Activities from stack
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
@@ -154,7 +157,7 @@ public class SessionManager {
         return user;
     }
 
-    public String getLogoutStatus () {
+    public String getSessionStatus () {
         return status;
     }
 
@@ -167,7 +170,9 @@ public class SessionManager {
         editor.clear();
         editor.commit();
         // After logout redirect user to Login Activity
-        Intent i = new Intent(_context, MainMenuActivity.class);
+        Intent i = new Intent(_context, JobListsActivity.class);
+
+        status = "loggedOut";
 
         // Closing all the Activities
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -176,6 +181,8 @@ public class SessionManager {
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         // Staring Login Activity
         _context.startActivity(i);
+
+
 
 
         //new HttpAsyncTask().execute("https://clockwork-api.herokuapp.com/users/sign_out.json");

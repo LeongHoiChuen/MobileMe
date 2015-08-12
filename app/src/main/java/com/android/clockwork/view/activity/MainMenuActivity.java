@@ -59,12 +59,15 @@ public class MainMenuActivity extends AppCompatActivity {
 
         //Session Session Manager'
         session = new SessionManager(getApplicationContext());
-        //if(!session.isUserLoggedIn()) {
-            //Intent descriptionIntent = getIntent();
-        String status= session.getLogoutStatus();
+        String sessionStatus = session.getSessionStatus();
+        //String status= session.getLogoutStatus();
                     //descriptionIntent.getExtras().getString("status");
-        if (status.equals("user has been successfully signed out")) {
+        if (sessionStatus.equals("notLoggedIn")) {
+            tx1.setText("Please register an employer account!");
+        } else if(sessionStatus.equals("loggedOut")){
             tx1.setText("You have successfully logged out!");
+        }else {
+            tx1.setText("");
         }
         //}
 
