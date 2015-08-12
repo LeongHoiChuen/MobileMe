@@ -13,6 +13,7 @@ public class Post {
     private String location;
     private String posting_date;
     private String job_date;
+    private int applicant_count;
 
     public Post(int id, String header, String company, int salary, String description, String location, String posting_date, String job_date) {
         this.id = id;
@@ -104,5 +105,13 @@ public class Post {
 
     public void setPosting_Date(String posting_Date) {
         this.posting_date = posting_Date;
+    }
+
+    public int getApplicant_count() {
+        return applicant_count;
+    }
+
+    public void setApplicant_count(int applicant_count) {
+        this.applicant_count = applicant_count;
     }
 }

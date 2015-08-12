@@ -2,6 +2,7 @@ package com.android.clockwork.view.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,15 +42,22 @@ public class PublishedAdapter extends BaseAdapter {
         TextView jobTitle = (TextView) view.findViewById(R.id.jobTitle);
         TextView jobDate = (TextView) view.findViewById(R.id.jobDate);
         TextView salary = (TextView) view.findViewById(R.id.salary);
+        TextView numApplicants = (TextView) view.findViewById(R.id.numApplicants);
         Button editButton = (Button) view.findViewById(R.id.editButton);
-
         // set text
         jobTitle.setText(p.getHeader());
         jobDate.setText("" + p.getJobDate());
         salary.setText("$ " + p.getSalary() + " per hour");
+        numApplicants.setText(p.getApplicant_count() + " Applicants");
 
-        // set listener for editbutton
-
+        if (p.getApplicant_count() > 0) {
+            // view only
+            editButton.setBackgroundColor(Color.GREEN);
+            editButton.setText("View");
+        } else {
+            // allow to edit
+            editButton.setText("Edit");
+        }
         return view;
     }
 
