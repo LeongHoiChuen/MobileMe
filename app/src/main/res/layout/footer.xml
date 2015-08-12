@@ -1,17 +1,43 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:id="@+id/footer"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="fill_parent"
+android:layout_height="50dp"
 android:layout_alignParentBottom="true"
-android:background="#FC0"
-android:gravity="center" >
+android:layout_alignParentLeft="true"
+android:layout_alignParentRight="true"
+android:background="#25292c"
+android:gravity="center_horizontal" >
 
-<TextView
+<ImageButton
+    android:id="@+id/btn_1"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
-    android:text="Clockwork"
-    android:textColor="#000"
-    android:textSize="20sp" />
+    android:background="@drawable/tab_home_selected" />
 
-</RelativeLayout>
+<ImageButton
+    android:id="@+id/btn_2"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="15dp"
+    android:layout_marginTop="2dp"
+    android:background="@drawable/tab_job" />
+
+<ImageButton
+    android:id="@+id/btn_3"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="15dp"
+    android:layout_marginTop="2dp"
+    android:background="@drawable/tab_user" />
+
+
+    <ImageButton
+        android:id="@+id/btn_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="2dp"
+        android:background="@drawable/tab_analytics" />
+
+
+
+</LinearLayout>
