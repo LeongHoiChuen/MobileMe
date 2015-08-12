@@ -43,6 +43,12 @@
             android:name="com.android.clockwork.view.activity.EditProfileActivity"
             android:label="@string/title_activity_edit_profile" >
         </activity>
+        <activity
+            android:name="com.android.clockwork.view.activity.MainActivity"
+            android:label="@string/title_activity_main" >
+        </activity>
+
+
     </application>
 
 </manifest>

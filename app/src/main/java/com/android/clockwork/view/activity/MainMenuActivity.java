@@ -68,8 +68,6 @@ public class MainMenuActivity extends AppCompatActivity {
         }
         //}
 
-
-
         final Button button = (Button)findViewById(R.id.LoginButton);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,6 +100,15 @@ public class MainMenuActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent addNewPost = new Intent(view.getContext(), AddNewPostActivity.class);
                 startActivity(addNewPost);
+            }
+        });
+
+        final Button mainButton = (Button) findViewById(R.id.tabbedButton);
+        mainButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent mainMenu = new Intent(view.getContext(), MainActivity.class);
+                startActivity(mainMenu);
             }
         });
 
