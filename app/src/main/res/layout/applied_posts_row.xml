@@ -62,10 +62,10 @@
             <!-- Edit Button -->
             <Button
                 android:background="@drawable/primary_button"
-                android:text="View"
-                android:id="@+id/editButton"
+                android:text="Withdraw"
+                android:id="@+id/withdrawButton"
                 style="@style/small_button"
-                android:layout_alignTop="@+id/jobTitle"
+                android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
             <!-- Location Text -->

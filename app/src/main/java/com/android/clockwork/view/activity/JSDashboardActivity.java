@@ -1,3 +1,4 @@
+
 package com.android.clockwork.view.activity;
 
 import android.app.ProgressDialog;
@@ -17,6 +18,7 @@ import android.widget.ListView;
 import com.android.clockwork.model.Post;
 import com.android.clockwork.model.SessionManager;
 import com.android.clockwork.view.adapter.AppliedAdapter;
+import com.android.clockwork.view.adapter.ListingAdapter;
 import com.android.clockwork.view.adapter.PublishedAdapter;
 import com.example.jiabaotan2012.cw.R;
 import com.google.gson.Gson;
@@ -47,6 +49,7 @@ public class JSDashboardActivity extends AppCompatActivity {
     ArrayList<Post> postList = new ArrayList<Post>();
     ProgressDialog dialog;
     ListView publishedList;
+    Post post;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +61,20 @@ public class JSDashboardActivity extends AppCompatActivity {
         user = session.getUserDetails();
         email = user.get(SessionManager.KEY_EMAIL);
         authToken = user.get(SessionManager.KEY_AUTHENTICATIONTOKEN);
-        
+
+        publishedList = (ListView) findViewById(R.id.publishedList);
+        publishedList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView adptView, View view, int position, long arg3) {
+                // to be changed
+                post = (Post) appliedAdapter.getItem(position);
+                appliedAdapter = (AppliedAdapter) publishedList.getAdapter();
+                new HttpAsyncTask().execute("https://clockwork-api.herokuapp.com/api/v1/users/withdraw");
+            }
+        });
+
+        new HttpAsyncTask().execute("https://clockwork-api.herokuapp.com/api/v1/users/get_applied_jobs");
+
         final Button logoutButton = (Button) findViewById(R.id.logoutButton);
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,6 +138,7 @@ public class JSDashboardActivity extends AppCompatActivity {
         }
     }
 
+    // withdraw and pull both in here, to be separated
     public String POST(String url){
         InputStream inputStream = null;
         String result = "";
@@ -136,6 +153,9 @@ public class JSDashboardActivity extends AppCompatActivity {
             List<NameValuePair> nvps = new ArrayList<NameValuePair>();
             nvps.add(new BasicNameValuePair("email", email));
 
+            if (post != null) {
+                nvps.add(new BasicNameValuePair("job_id", String.valueOf(post.getId())));
+            }
             // 4. set httpPost Entity
             httpPost.setEntity(new UrlEncodedFormEntity(nvps));
 
