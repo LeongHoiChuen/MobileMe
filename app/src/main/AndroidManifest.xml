@@ -24,8 +24,8 @@
             android:label="@string/title_activity_register" >
         </activity>
         <activity
-            android:name="com.android.clockwork.view.activity.LoginActivity"
-            android:label="LoginActivity" >
+            android:name="com.android.clockwork.view.activity.MainMenuActivity"
+            android:label="MainMenuActivity" >
         </activity>
         <activity
             android:name="com.android.clockwork.view.activity.AddNewPostActivity"
@@ -58,6 +58,10 @@
         <activity
             android:name="com.android.clockwork.view.activity.JSDashboardActivity"
             android:label="@string/title_activity_jsdashboard" >
+        </activity>
+        <activity
+            android:name="com.android.clockwork.view.activity.ViewJobActivity"
+            android:label="@string/title_activity_view_job" >
         </activity>
     </application>
 

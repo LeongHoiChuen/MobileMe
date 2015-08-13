@@ -212,7 +212,7 @@ public class AddNewPostActivity extends ActionBarActivity implements View.OnClic
             public void onClick(View view) {
                 // to change and check for employer or JS dashboard
                 if (session.checkLogin()) {
-                    Intent loginRedirect = new Intent(view.getContext(), LoginActivity.class);
+                    Intent loginRedirect = new Intent(view.getContext(), MainMenuActivity.class);
                     startActivity(loginRedirect);
                 } else {
                     if (user.get(SessionManager.KEY_ACCOUNTYPE).equalsIgnoreCase("employer")) {
@@ -232,7 +232,7 @@ public class AddNewPostActivity extends ActionBarActivity implements View.OnClic
             public void onClick(View view) {
                 // to change the link
                 if (session.checkLogin()) {
-                    Intent loginRedirect = new Intent(view.getContext(), LoginActivity.class);
+                    Intent loginRedirect = new Intent(view.getContext(), MainMenuActivity.class);
                     startActivity(loginRedirect);
                 } else {
                     if (user.get(SessionManager.KEY_ACCOUNTYPE).equalsIgnoreCase("employer")) {
@@ -251,7 +251,7 @@ public class AddNewPostActivity extends ActionBarActivity implements View.OnClic
             public void onClick(View view) {
                 //
                 if (session.checkLogin()) {
-                    Intent loginRedirect = new Intent(view.getContext(), LoginActivity.class);
+                    Intent loginRedirect = new Intent(view.getContext(), MainMenuActivity.class);
                     startActivity(loginRedirect);
                 } else {
                     // analytics link

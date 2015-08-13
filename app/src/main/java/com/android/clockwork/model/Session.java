@@ -11,7 +11,7 @@ public class Session {
     private String account_type;
     private String authentication_token;
 
-    public Session(String email, String passWord) {
+    public Session(String email, String password) {
         this.email = email;
         this.password = password;
     }

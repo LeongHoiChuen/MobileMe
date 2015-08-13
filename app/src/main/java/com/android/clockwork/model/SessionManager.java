@@ -7,7 +7,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.android.clockwork.view.activity.JobListsActivity;
-import com.android.clockwork.view.activity.LoginActivity;
+import com.android.clockwork.view.activity.MainMenuActivity;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -102,7 +102,7 @@ public class SessionManager {
         if(!this.isUserLoggedIn()){
 
             // user is not logged in redirect him to Login Activity
-            Intent i = new Intent(_context, LoginActivity.class);
+            Intent i = new Intent(_context, MainMenuActivity.class);
 
             status = "notLoggedIn";
 

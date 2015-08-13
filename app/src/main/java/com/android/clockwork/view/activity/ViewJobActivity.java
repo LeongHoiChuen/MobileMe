@@ -1,20 +1,19 @@
 package com.android.clockwork.view.activity;
 
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.InputType;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.clockwork.model.Post;
 import com.android.clockwork.model.SessionManager;
 import com.example.jiabaotan2012.cw.R;
 
@@ -30,77 +29,72 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
-
-public class EditProfileActivity extends AppCompatActivity implements View.OnClickListener {
-    EditText addrText, numText, dateText;
-    Button submitBtn;
-    DatePickerDialog datePickerDialog;
-    SimpleDateFormat sdf;
+public class ViewJobActivity extends AppCompatActivity {
     SessionManager session;
     HashMap<String, String> user;
-    String email, authToken, username;
+    String name, email, authToken;
+    Post post;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_profile);
+        setContentView(R.layout.activity_view_job);
         initializeFooter();
 
         session = new SessionManager(getApplicationContext());
         user = session.getUserDetails();
-        username = user.get(SessionManager.KEY_NAME);
+        name = user.get(SessionManager.KEY_NAME);
         email = user.get(SessionManager.KEY_EMAIL);
         authToken = user.get(SessionManager.KEY_AUTHENTICATIONTOKEN);
 
-        addrText = (EditText) findViewById(R.id.addrText);
-        numText = (EditText) findViewById(R.id.numText);
-        dateText = (EditText) findViewById(R.id.dateText);
-        dateText.setInputType(InputType.TYPE_NULL);
+        Button applyButton = (Button) findViewById(R.id.applyButton);
+        if (session.checkLogin()) {
+            applyButton.setText("Login");
+        }
 
-        sdf = new SimpleDateFormat("dd-MM-yyy");
-        setDateTimeField();
+        post = getIntent().getParcelableExtra(JobListsActivity.PAR_KEY);
 
-        submitBtn = (Button) findViewById(R.id.submitBtn);
-        submitBtn.setOnClickListener(new View.OnClickListener() {
+        TextView title = (TextView) findViewById(R.id.jobTitle);
+        TextView hiringCo = (TextView) findViewById(R.id.hiringCo);
+        TextView postedDate = (TextView) findViewById(R.id.postedDate);
+        TextView location = (TextView) findViewById(R.id.location);
+        TextView description = (TextView) findViewById(R.id.description);
+        TextView jobDate = (TextView) findViewById(R.id.jobDate);
+        TextView salary = (TextView) findViewById(R.id.salary);
+
+        title.setText(post.getHeader());
+        hiringCo.setText(post.getCompany());
+        postedDate.setText("Posted on " + post.getPosting_Date());
+        location.setText(post.getLocation());
+        description.setText(post.getDescription());
+        jobDate.setText("Job Date: " + post.getJobDate());
+        salary.setText("$ " + post.getSalary());
+
+        applyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // update new account details using PUT
-                new HttpAsyncTask().execute("https://clockwork-api.herokuapp.com/api/v1/users/update");
+                //submit new job post
+                new HttpAsyncTask().execute("https://clockwork-api.herokuapp.com/api/v1/users/apply");
 
-                Intent listingIntent = new Intent(view.getContext(), JobListsActivity.class);
-                startActivity(listingIntent);
+                if (session.checkLogin()) {
+                    Intent loginRedirect = new Intent(view.getContext(), MainMenuActivity.class);
+                    startActivity(loginRedirect);
+                } else {
+                    Intent dashboard = new Intent(view.getContext(), JSDashboardActivity.class);
+                    startActivity(dashboard);
+                }
             }
         });
-    }
-
-    private void setDateTimeField() {
-        dateText.setOnClickListener(this);
-        Calendar newCalendar = Calendar.getInstance();
-        datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                Calendar newDate = Calendar.getInstance();
-                newDate.set(year, monthOfYear, dayOfMonth);
-                dateText.setText(sdf.format(newDate.getTime()));
-            }
-
-        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
-    }
-
-    public void onClick(View v) {
-        datePickerDialog.show();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_edit_profile, menu);
+        getMenuInflater().inflate(R.menu.menu_view_job, menu);
         return true;
     }
 
@@ -119,7 +113,19 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         return super.onOptionsItemSelected(item);
     }
 
-    public String PUT(String url){
+    private class HttpAsyncTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... urls) {
+            return POST(urls[0]);
+        }
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result) {
+            Toast.makeText(getBaseContext(), "Applied!", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public String POST(String url){
         InputStream inputStream = null;
         String result = "";
         try {
@@ -131,11 +137,8 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
 
             // 3. build NVP
             List<NameValuePair> nvps = new ArrayList<NameValuePair>();
+            nvps.add(new BasicNameValuePair("job_id", String.valueOf(post.getId())));
             nvps.add(new BasicNameValuePair("email", email));
-            nvps.add(new BasicNameValuePair("username", username));
-            nvps.add(new BasicNameValuePair("address", addrText.getText().toString()));
-            nvps.add(new BasicNameValuePair("contact_number", numText.getText().toString()));
-            nvps.add(new BasicNameValuePair("date_of_birth", "" + dateText.getText().toString()));
 
             // 4. set httpPost Entity
             httpPost.setEntity(new UrlEncodedFormEntity(nvps));
@@ -172,18 +175,6 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
 
         inputStream.close();
         return result;
-    }
-
-    private class HttpAsyncTask extends AsyncTask<String, Void, String> {
-        @Override
-        protected String doInBackground(String... urls) {
-            return PUT(urls[0]);
-        }
-        // onPostExecute displays the results of the AsyncTask.
-        @Override
-        protected void onPostExecute(String result) {
-            //Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
-        }
     }
 
     public void initializeFooter() {

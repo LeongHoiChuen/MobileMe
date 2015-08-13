@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 
+import com.android.clockwork.controller.MainController;
 import com.android.clockwork.view.adapter.ListingAdapter;
 import com.android.clockwork.model.Post;
 import com.android.clockwork.model.SessionManager;
@@ -34,6 +35,7 @@ import java.util.HashMap;
 
 public class JobListsActivity extends AppCompatActivity {
 
+    public final static String PAR_KEY = "KEY";
     ListView listView;
     ListingAdapter listingAdapter;
     ArrayList<Post> postList;
@@ -52,8 +54,13 @@ public class JobListsActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView adptView, View view, int position, long arg3) {
-                Intent mainActivity = new Intent(view.getContext(), LoginActivity.class);
-                startActivity(mainActivity);
+                Bundle bundle = new Bundle();
+                listingAdapter = (ListingAdapter) listView.getAdapter();
+                bundle.putParcelable(PAR_KEY, (Post) listingAdapter.getItem(position));
+
+                Intent viewJobActivity = new Intent(view.getContext(), ViewJobActivity.class);
+                viewJobActivity.putExtras(bundle);
+                startActivity(viewJobActivity);
             }
         });
         // Session class instance
@@ -67,13 +74,13 @@ public class JobListsActivity extends AppCompatActivity {
             public void onClick(View arg0) {
 
                 // Clear the User session data
-                // and redirect user to LoginActivity
+                // and redirect user to MainMenuActivity
                 session.logoutUser();
             }
         });*/
 
         // Check user login (this is the important point)
-        // If Session is not logged in , This will redirect user to LoginActivity
+        // If Session is not logged in , This will redirect user to MainMenuActivity
         // and finish current activity from activity stack.
  /*       if(session.checkLogin()) {
 
@@ -193,7 +200,7 @@ public class JobListsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // to change and check for employer or JS dashboard
                 if (session.checkLogin()) {
-                    Intent loginRedirect = new Intent(view.getContext(), LoginActivity.class);
+                    Intent loginRedirect = new Intent(view.getContext(), MainMenuActivity.class);
                     startActivity(loginRedirect);
                 } else {
                     if (user.get(SessionManager.KEY_ACCOUNTYPE).equalsIgnoreCase("employer")) {
@@ -213,7 +220,7 @@ public class JobListsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // to change the link
                 if (session.checkLogin()) {
-                    Intent loginRedirect = new Intent(view.getContext(), LoginActivity.class);
+                    Intent loginRedirect = new Intent(view.getContext(), MainMenuActivity.class);
                     startActivity(loginRedirect);
                 } else {
                     if (user.get(SessionManager.KEY_ACCOUNTYPE).equalsIgnoreCase("employer")) {
@@ -232,7 +239,7 @@ public class JobListsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //
                 if (session.checkLogin()) {
-                    Intent loginRedirect = new Intent(view.getContext(), LoginActivity.class);
+                    Intent loginRedirect = new Intent(view.getContext(), MainMenuActivity.class);
                     startActivity(loginRedirect);
                 } else {
                     // analytics link

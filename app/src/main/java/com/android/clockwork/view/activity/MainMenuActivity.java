@@ -32,6 +32,7 @@ import java.util.List;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.clockwork.controller.MainController;
 import com.android.clockwork.model.Session;
@@ -40,7 +41,7 @@ import com.example.jiabaotan2012.cw.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-public class LoginActivity extends AppCompatActivity {
+public class MainMenuActivity extends AppCompatActivity {
     final static MainController mainController = new MainController();
     static int statusCode;
     EditText ed1,ed2;
@@ -53,11 +54,11 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_main_menu);
         initializeFooter();
 
-        ed1 = (EditText)findViewById(R.id.emailText);
-        ed2 = (EditText)findViewById(R.id.passwordText);
+        ed1 = (EditText) findViewById(R.id.emailText);
+        ed2 = (EditText) findViewById(R.id.passwordText);
 
         //Session Session Manager'
         session = new SessionManager(getApplicationContext());
@@ -106,7 +107,7 @@ public class LoginActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-    public static String POST(String url, Session loginSession){
+    public String POST(String url, Session loginSession){
         InputStream inputStream = null;
         String result = "";
         try {
@@ -124,6 +125,7 @@ public class LoginActivity extends AppCompatActivity {
 
             List<NameValuePair> pairs = new ArrayList<NameValuePair>();
 
+            loginSession = new Session(ed1.getText().toString(), ed2.getText().toString());
             pairs.add(new BasicNameValuePair("user[email]", loginSession.getEmail()));
             pairs.add(new BasicNameValuePair("user[password]", loginSession.getPassword()));
 
@@ -167,8 +169,6 @@ public class LoginActivity extends AppCompatActivity {
     private class HttpAsyncTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... urls) {
-
-            loginSession = new Session(ed1.getText().toString(), ed2.getText().toString());
 
             return POST(urls[0], loginSession);
         }
@@ -245,7 +245,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // to change and check for employer or JS dashboard
                 if (session.checkLogin()) {
-                    Intent loginRedirect = new Intent(view.getContext(), LoginActivity.class);
+                    Intent loginRedirect = new Intent(view.getContext(), MainMenuActivity.class);
                     startActivity(loginRedirect);
                 } else {
                     if (user.get(SessionManager.KEY_ACCOUNTYPE).equalsIgnoreCase("employer")) {
@@ -265,7 +265,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // to change the link
                 if (session.checkLogin()) {
-                    Intent loginRedirect = new Intent(view.getContext(), LoginActivity.class);
+                    Intent loginRedirect = new Intent(view.getContext(), MainMenuActivity.class);
                     startActivity(loginRedirect);
                 } else {
                     if (user.get(SessionManager.KEY_ACCOUNTYPE).equalsIgnoreCase("employer")) {
@@ -284,7 +284,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //
                 if (session.checkLogin()) {
-                    Intent loginRedirect = new Intent(view.getContext(), LoginActivity.class);
+                    Intent loginRedirect = new Intent(view.getContext(), MainMenuActivity.class);
                     startActivity(loginRedirect);
                 } else {
                     // analytics link

@@ -1,10 +1,13 @@
 package com.android.clockwork.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by jiabao.tan.2012 on 2/8/2015.
  */
 
-public class Post {
+public class Post implements Parcelable {
     private int id;
     private String header;
     private String company;
@@ -41,6 +44,9 @@ public class Post {
         this.description = description;
         this.location = location;
         this.job_date = job_date;
+    }
+
+    public Post() {
     }
 
     public String getHeader() {
@@ -114,4 +120,38 @@ public class Post {
     public void setApplicant_count(int applicant_count) {
         this.applicant_count = applicant_count;
     }
+
+    public void writeToParcel(Parcel parcel, int flags) {
+        parcel.writeInt(id);
+        parcel.writeString(header);
+        parcel.writeString(company);
+        parcel.writeInt(salary);
+        parcel.writeString(description);
+        parcel.writeString(location);
+        parcel.writeString(posting_date);
+        parcel.writeString(job_date);
+    }
+
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Parcelable.Creator<Post> CREATOR = new Creator<Post>() {
+        public Post createFromParcel(Parcel source) {
+            Post Post = new Post();
+            Post.id = source.readInt();
+            Post.header = source.readString();
+            Post.company = source.readString();
+            Post.salary = source.readInt();
+            Post.description = source.readString();
+            Post.location = source.readString();
+            Post.posting_date = source.readString();
+            Post.job_date = source.readString();
+            return Post;
+        }
+
+        public Post[] newArray(int size) {
+            return new Post[size];
+        }
+    };
 }

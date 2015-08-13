@@ -1,0 +1,180 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary"
+    tools:context="com.android.clockwork.view.activity.ViewJobActivity">
+
+    <include layout="@layout/header" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/header"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp" >
+
+        <RelativeLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_corner"
+            android:padding="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Hiring Company Name"
+                android:id="@+id/hiringCo"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Job Title"
+                android:id="@+id/jobTitle"
+                android:layout_below="@+id/hiringCo"
+                android:layout_alignLeft="@+id/hiringCo"
+                android:layout_alignStart="@+id/hiringCo" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Posted on 14/08/2015"
+                android:paddingTop="10dp"
+                android:id="@+id/postedDate"
+                android:layout_below="@+id/jobTitle"
+                android:layout_alignLeft="@+id/jobTitle"
+                android:layout_alignStart="@+id/jobTitle" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:paddingTop="20dp"
+                android:paddingBottom="50dp"
+                android:textSize="20dp"
+                android:text="Job Description"
+                android:id="@+id/description"
+                android:layout_below="@+id/jobDate"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:id="@+id/salary"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:gravity="right"
+                android:text="$10"
+                android:textSize="30dip"
+                android:textColor="@color/pink"
+                android:textStyle="bold"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_above="@+id/postedDate" />
+            <TextView
+                android:id="@+id/perhour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="per hour"
+                android:textSize="20dip"
+                android:textColor="@color/pink"
+                android:textStyle="bold"
+                android:layout_alignBottom="@+id/postedDate"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/location"
+                android:id="@+id/locationImage"
+                android:layout_below="@+id/postedDate"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Job Location"
+                android:id="@+id/location"
+                android:layout_alignTop="@+id/locationImage"
+                android:layout_toRightOf="@+id/locationImage"
+                android:layout_toEndOf="@+id/locationImage" />
+
+            <Button
+                android:background="@drawable/primary_button"
+                android:text="Apply"
+                android:id="@+id/applyButton"
+                style="@style/button_text"
+                android:layout_gravity="center_horizontal"
+                android:layout_below="@+id/description"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Job Date: 01/09/2015"
+                android:id="@+id/jobDate"
+                android:layout_below="@+id/location"
+                android:layout_alignLeft="@+id/location"
+                android:layout_alignStart="@+id/location" />
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:background="#25292c"
+        android:gravity="center_horizontal"
+        android:id="@+id/linearLayout">
+
+        <ImageButton
+            android:id="@+id/jobListing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/tab_home_selected" />
+
+        <ImageButton
+            android:id="@+id/jobDashboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/tab_job" />
+
+        <ImageButton
+            android:id="@+id/accountSettings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/tab_user" />
+
+        <ImageButton
+            android:id="@+id/analytics"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/tab_analytics" />
+    </LinearLayout>
+
+</RelativeLayout>

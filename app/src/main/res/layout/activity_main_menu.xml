@@ -1,116 +1,105 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context=".MainMenuActivity">
-
-    <include layout="@layout/footer"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary"
+    tools:context=".MainMenuActivity">
+    <include layout="@layout/header"
         android:id="@+id/include" />
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView"
-        android:src="@drawable/cw"
-        android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true" />
 
-    <TextView android:text="" android:layout_width="wrap_content"
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textview"
-        android:textSize="35dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:id="@+id/textView"
-        android:layout_below="@+id/textview"
-        android:layout_centerHorizontal="true"
-        android:textColor="#ff7aff24"
-        android:textSize="35dp" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/editText"
-        android:hint="Enter Email"
-        android:inputType="textEmailAddress"
-        android:focusable="true"
-        android:textColorHighlight="#ff7eff15"
-        android:textColorHint="#ffff25e6"
-        android:layout_marginTop="46dp"
-        android:layout_below="@+id/imageView"
+        android:background="@drawable/rounded_corner"
+        android:padding="12dp"
+        android:gravity="center_horizontal"
+        android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Please login to Clockwork or register an account absolutely free!"
+            android:gravity="center_horizontal"
+            android:id="@+id/textView2"
+            android:paddingBottom="40dp"
+            android:layout_gravity="center_horizontal" />
+
+        <EditText
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:hint="Email"
+            android:ems="8"
+            android:id="@+id/emailText"
+            android:layout_gravity="center_horizontal" />
+
+        <EditText
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="Password"
+            android:ems="8"
+            android:id="@+id/passwordText"
+            android:layout_gravity="center_horizontal" />
+
+        <Button
+            android:background="@drawable/primary_button"
+            android:text="Login"
+            android:id="@+id/loginButton"
+            style="@style/button_text"
+            android:layout_gravity="center_horizontal" />
+
+        <Button
+            android:background="@drawable/primary_button"
+            android:text="Register"
+            android:id="@+id/registerButton"
+            style="@style/button_text"
+            android:layout_gravity="center_horizontal" />
+
+    </LinearLayout>
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:background="#25292c"
+        android:gravity="center_horizontal" >
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:id="@+id/editText2"
-        android:layout_below="@+id/editText"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/editText"
-        android:layout_alignEnd="@+id/editText"
-        android:textColorHint="#ffff299f"
-        android:hint="Password" />
+        <ImageButton
+            android:id="@+id/jobListing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/tab_home_selected" />
 
+        <ImageButton
+            android:id="@+id/jobDashboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/tab_job" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/resultText"
-        android:layout_below="@+id/editText2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:textSize="25dp" />
+        <ImageButton
+            android:id="@+id/accountSettings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/tab_user" />
 
-     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="View"
-        android:id="@+id/ListingButton"
-        android:layout_above="@+id/include"
-        android:layout_toLeftOf="@+id/textView"
-        android:layout_toStartOf="@+id/textView" />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Register"
-        android:id="@+id/RegisterButton"
-        android:layout_above="@+id/addPostButton"
-        android:layout_toRightOf="@+id/ListingButton"
-        android:layout_toEndOf="@+id/ListingButton" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Post"
-        android:id="@+id/addPostButton"
-        android:layout_above="@+id/ListingButton"
-        android:layout_alignLeft="@+id/RegisterButton"
-        android:layout_alignStart="@+id/RegisterButton" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Emp DB"
-        android:id="@+id/dashboardButton"
-        android:layout_alignTop="@+id/RegisterButton"
-        android:layout_alignRight="@+id/textView"
-        android:layout_alignEnd="@+id/textView" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="login"
-        android:id="@+id/LoginButton"
-        android:layout_below="@+id/resultText"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
+        <ImageButton
+            android:id="@+id/analytics"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/tab_analytics" />
+    </LinearLayout>
 </RelativeLayout>
