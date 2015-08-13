@@ -140,7 +140,7 @@ public class JSDashboardActivity extends AppCompatActivity {
                 dialog.dismiss();
             } else {
                 post = null;
-                Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
+                dialog.dismiss();
             }
         }
     }
