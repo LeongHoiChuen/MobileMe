@@ -66,8 +66,8 @@ public class EmployerRegisterActivity extends ActionBarActivity {
             public void onClick(View view) {
                 new HttpAsyncTask().execute("https://clockwork-api.herokuapp.com/users.json");
 
-                Intent jobListings = new Intent(view.getContext(), EditEmployerProfileActivity.class);
-                startActivity(jobListings);
+                Intent employerEditProfile = new Intent(view.getContext(), EditEmployerProfileActivity.class);
+                startActivity(employerEditProfile);
             }
         });
     }
@@ -243,6 +243,8 @@ public class EmployerRegisterActivity extends ActionBarActivity {
                 } else {
                     if (user.get(SessionManager.KEY_ACCOUNTYPE).equalsIgnoreCase("employer")) {
                         // to confirm and change link
+                        Intent employerEditProfile = new Intent(view.getContext(), EditEmployerProfileActivity.class);
+                        startActivity(employerEditProfile);
                     } else {
                         Intent editProfile = new Intent(view.getContext(), EditProfileActivity.class);
                         startActivity(editProfile);

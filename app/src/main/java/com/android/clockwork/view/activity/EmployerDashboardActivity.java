@@ -16,6 +16,7 @@ import android.widget.ListView;
 
 import com.android.clockwork.model.Post;
 import com.android.clockwork.model.SessionManager;
+import com.android.clockwork.view.adapter.AppliedAdapter;
 import com.android.clockwork.view.adapter.PublishedAdapter;
 import com.example.jiabaotan2012.cw.R;
 import com.google.gson.Gson;
@@ -46,6 +47,7 @@ public class EmployerDashboardActivity extends AppCompatActivity {
     SessionManager session;
     HashMap<String, String> user;
     String email, authToken;
+    Post post;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +68,12 @@ public class EmployerDashboardActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView adptView, View view, int position, long arg3) {
                 // edit post link
+                publishedAdapter = (PublishedAdapter) publishedList.getAdapter();
+                post = (Post) publishedAdapter.getItem(position);
+                new HttpAsyncTask().execute("https://clockwork-api.herokuapp.com/api/v1/posts/delete");
+
+                Intent empDashboard = new Intent(view.getContext(), EmployerDashboardActivity.class);
+                startActivity(empDashboard);
             }
         });
 
@@ -130,14 +138,20 @@ public class EmployerDashboardActivity extends AppCompatActivity {
         // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result) {
-            Gson gson = new Gson();
-            Type listType = new TypeToken<ArrayList<Post>>(){}.getType();
-            postList = gson.fromJson(result, listType);
+            if (post == null) {
+                Gson gson = new Gson();
+                Type listType = new TypeToken<ArrayList<Post>>() {
+                }.getType();
+                postList = gson.fromJson(result, listType);
 
-            publishedAdapter = new PublishedAdapter(EmployerDashboardActivity.this, postList);
+                publishedAdapter = new PublishedAdapter(EmployerDashboardActivity.this, postList);
 
-            publishedList.setAdapter(publishedAdapter);
-            dialog.dismiss();
+                publishedList.setAdapter(publishedAdapter);
+                dialog.dismiss();
+            } else {
+                post = null;
+                dialog.dismiss();
+            }
         }
     }
 
@@ -153,6 +167,9 @@ public class EmployerDashboardActivity extends AppCompatActivity {
 
             // 3. build NVP
             List<NameValuePair> nvps = new ArrayList<NameValuePair>();
+            if (post != null) {
+                nvps.add(new BasicNameValuePair("job_id", String.valueOf(post.getId())));
+            }
             nvps.add(new BasicNameValuePair("email", email));
 
             // 4. set httpPost Entity
@@ -233,6 +250,8 @@ public class EmployerDashboardActivity extends AppCompatActivity {
                 } else {
                     if (user.get(SessionManager.KEY_ACCOUNTYPE).equalsIgnoreCase("employer")) {
                         // to confirm and change link
+                        Intent employerEditProfile = new Intent(view.getContext(), EditEmployerProfileActivity.class);
+                        startActivity(employerEditProfile);
                     } else {
                         Intent editProfile = new Intent(view.getContext(), EditProfileActivity.class);
                         startActivity(editProfile);

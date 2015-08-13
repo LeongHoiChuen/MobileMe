@@ -43,7 +43,7 @@ public class PublishedAdapter extends BaseAdapter {
         TextView jobDate = (TextView) view.findViewById(R.id.jobDate);
         TextView salary = (TextView) view.findViewById(R.id.salary);
         TextView numApplicants = (TextView) view.findViewById(R.id.numApplicants);
-        Button editButton = (Button) view.findViewById(R.id.editButton);
+        TextView editButton = (TextView) view.findViewById(R.id.editButton);
         // set text
         jobTitle.setText(p.getHeader());
         jobDate.setText("" + p.getJobDate());
@@ -52,11 +52,10 @@ public class PublishedAdapter extends BaseAdapter {
 
         if (p.getApplicant_count() > 0) {
             // view only
-            editButton.setBackgroundColor(Color.GREEN);
-            editButton.setText("View");
+            editButton.setVisibility(View.GONE);
         } else {
             // allow to edit
-            editButton.setText("Edit");
+            editButton.setText("Delete");
         }
         return view;
     }

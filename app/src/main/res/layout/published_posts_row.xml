@@ -72,7 +72,7 @@
                 android:layout_alignParentEnd="true" />
 
             <!-- Edit Button -->
-            <Button
+            <TextView
                 android:background="@drawable/primary_button"
                 android:text="Edit"
                 android:id="@+id/editButton"

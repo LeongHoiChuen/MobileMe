@@ -221,6 +221,8 @@ public class JSRegisterActivity extends AppCompatActivity {
                 } else {
                     if (user.get(SessionManager.KEY_ACCOUNTYPE).equalsIgnoreCase("employer")) {
                         // to confirm and change link
+                        Intent employerEditProfile = new Intent(view.getContext(), EditEmployerProfileActivity.class);
+                        startActivity(employerEditProfile);
                     } else {
                         Intent editProfile = new Intent(view.getContext(), EditProfileActivity.class);
                         startActivity(editProfile);
