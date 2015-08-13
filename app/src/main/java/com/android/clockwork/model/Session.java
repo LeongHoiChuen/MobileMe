@@ -7,22 +7,22 @@ public class Session {
     private int id;
     private String userName;
     private String email;
-    private String passWord;
-    private String accountType;
-    private String authenticationToken;
+    private String password;
+    private String account_type;
+    private String authentication_token;
 
     public Session(String email, String passWord) {
         this.email = email;
-        this.passWord = passWord;
+        this.password = password;
     }
 
-    public Session(int id, String userName, String email, String accountType, String passWord, String authenticationToken) {
+    public Session(int id, String userName, String email, String account_type, String password, String authentication_token) {
         this.id = id;
         this.userName = userName;
         this.email = email;
-        this.accountType = accountType;
-        this.passWord = passWord;
-        this.authenticationToken = authenticationToken;
+        this.account_type = account_type;
+        this.password = password;
+        this.authentication_token = authentication_token;
     }
 
     public String getUserName() {
@@ -37,12 +37,12 @@ public class Session {
 
     public String getPassword() {
 
-        return passWord;
+        return password;
     }
 
     public void setPassword(String password) {
 
-        this.passWord = password;
+        this.password = password;
     }
 
     public String getEmail() {
@@ -54,18 +54,18 @@ public class Session {
     }
 
     public String getAccountType() {
-        return accountType;
+        return account_type;
     }
 
     public void setAccountType(String accountType) {
-        this.accountType = accountType;
+        this.account_type = account_type;
     }
 
     public String getAuthenticationToken(){
-        return authenticationToken;
+        return authentication_token;
     }
 
-    public void setAuthenticationToken(String authenticationToken){
-        this.authenticationToken = authenticationToken;
+    public void setAuthenticationToken(String authentication_token){
+        this.authentication_token = authentication_token;
     }
 }

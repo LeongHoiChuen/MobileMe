@@ -1,19 +1,15 @@
 package com.android.clockwork.view.activity;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
-import android.widget.AdapterView.OnItemClickListener;
 
 import com.android.clockwork.view.adapter.ListingAdapter;
 import com.android.clockwork.model.Post;
@@ -43,18 +39,20 @@ public class JobListsActivity extends AppCompatActivity {
     ArrayList<Post> postList;
     ProgressDialog dialog;
     SessionManager session;
+    HashMap<String, String> user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job_lists);
+        initializeFooter();
         new HttpAsyncTask().execute("https://clockwork-api.herokuapp.com/api/v1/posts/all.json");
 
         listView = (ListView) findViewById(R.id.list);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView adptView, View view, int position, long arg3) {
-                Intent mainActivity = new Intent(view.getContext(), MainMenuActivity.class);
+                Intent mainActivity = new Intent(view.getContext(), LoginActivity.class);
                 startActivity(mainActivity);
             }
         });
@@ -72,7 +70,7 @@ public class JobListsActivity extends AppCompatActivity {
         }*/
 
         // get user data from session
-        HashMap<String, String> user = session.getUserDetails();
+        user = session.getUserDetails();
 
         // get name
         String name = user.get(SessionManager.KEY_NAME);
@@ -166,5 +164,69 @@ public class JobListsActivity extends AppCompatActivity {
             listView.setAdapter(listingAdapter);
             dialog.dismiss();
         }
+    }
+
+    public void initializeFooter() {
+        final ImageButton jobListing = (ImageButton)findViewById(R.id.jobListing);
+        jobListing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent jobListing = new Intent(view.getContext(), JobListsActivity.class);
+                startActivity(jobListing);
+            }
+        });
+
+        final ImageButton jobDashboard = (ImageButton) findViewById(R.id.jobDashboard);
+        jobDashboard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // to change and check for employer or JS dashboard
+                if (session.checkLogin()) {
+                    Intent loginRedirect = new Intent(view.getContext(), LoginActivity.class);
+                    startActivity(loginRedirect);
+                } else {
+                    if (user.get(SessionManager.KEY_ACCOUNTYPE).equalsIgnoreCase("employer")) {
+                        Intent employerDashboard = new Intent(view.getContext(), EmployerDashboardActivity.class);
+                        startActivity(employerDashboard);
+                    } else {
+                        Intent jsDashboard = new Intent(view.getContext(), JSDashboardActivity.class);
+                        startActivity(jsDashboard);
+                    }
+                }
+            }
+        });
+
+        final ImageButton accountSettings = (ImageButton) findViewById(R.id.accountSettings);
+        accountSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // to change the link
+                if (session.checkLogin()) {
+                    Intent loginRedirect = new Intent(view.getContext(), LoginActivity.class);
+                    startActivity(loginRedirect);
+                } else {
+                    if (user.get(SessionManager.KEY_ACCOUNTYPE).equalsIgnoreCase("employer")) {
+                        // to confirm and change link
+                    } else {
+                        Intent editProfile = new Intent(view.getContext(), EditProfileActivity.class);
+                        startActivity(editProfile);
+                    }
+                }
+            }
+        });
+
+        final ImageButton analytics = (ImageButton) findViewById(R.id.analytics);
+        analytics.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //
+                if (session.checkLogin()) {
+                    Intent loginRedirect = new Intent(view.getContext(), LoginActivity.class);
+                    startActivity(loginRedirect);
+                } else {
+                    // analytics link
+                }
+            }
+        });
     }
 }

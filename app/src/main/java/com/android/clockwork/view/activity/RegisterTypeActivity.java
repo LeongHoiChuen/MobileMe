@@ -6,18 +6,28 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.android.clockwork.model.SessionManager;
 import com.example.jiabaotan2012.cw.R;
+
+import java.util.HashMap;
 
 
 public class RegisterTypeActivity extends ActionBarActivity {
     ImageView empRegister, jsRegister;
+    SessionManager session;
+    HashMap<String, String> user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_type);
+        initializeFooter();
+
+        session = new SessionManager(getApplicationContext());
+        user = session.getUserDetails();
 
         empRegister = (ImageView) findViewById(R.id.empRegister);
         jsRegister = (ImageView) findViewById(R.id.jsRegister);
@@ -59,5 +69,69 @@ public class RegisterTypeActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void initializeFooter() {
+        final ImageButton jobListing = (ImageButton)findViewById(R.id.jobListing);
+        jobListing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent jobListing = new Intent(view.getContext(), JobListsActivity.class);
+                startActivity(jobListing);
+            }
+        });
+
+        final ImageButton jobDashboard = (ImageButton) findViewById(R.id.jobDashboard);
+        jobDashboard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // to change and check for employer or JS dashboard
+                if (session.checkLogin()) {
+                    Intent loginRedirect = new Intent(view.getContext(), LoginActivity.class);
+                    startActivity(loginRedirect);
+                } else {
+                    if (user.get(SessionManager.KEY_ACCOUNTYPE).equalsIgnoreCase("employer")) {
+                        Intent employerDashboard = new Intent(view.getContext(), EmployerDashboardActivity.class);
+                        startActivity(employerDashboard);
+                    } else {
+                        Intent jsDashboard = new Intent(view.getContext(), JSDashboardActivity.class);
+                        startActivity(jsDashboard);
+                    }
+                }
+            }
+        });
+
+        final ImageButton accountSettings = (ImageButton) findViewById(R.id.accountSettings);
+        accountSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // to change the link
+                if (session.checkLogin()) {
+                    Intent loginRedirect = new Intent(view.getContext(), LoginActivity.class);
+                    startActivity(loginRedirect);
+                } else {
+                    if (user.get(SessionManager.KEY_ACCOUNTYPE).equalsIgnoreCase("employer")) {
+                        // to confirm and change link
+                    } else {
+                        Intent editProfile = new Intent(view.getContext(), EditProfileActivity.class);
+                        startActivity(editProfile);
+                    }
+                }
+            }
+        });
+
+        final ImageButton analytics = (ImageButton) findViewById(R.id.analytics);
+        analytics.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //
+                if (session.checkLogin()) {
+                    Intent loginRedirect = new Intent(view.getContext(), LoginActivity.class);
+                    startActivity(loginRedirect);
+                } else {
+                    // analytics link
+                }
+            }
+        });
     }
 }

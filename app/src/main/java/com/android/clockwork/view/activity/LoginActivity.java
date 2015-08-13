@@ -1,6 +1,5 @@
 package com.android.clockwork.view.activity;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -10,6 +9,7 @@ import android.content.Intent;
 
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import org.apache.http.HttpResponse;
@@ -40,7 +40,7 @@ import com.example.jiabaotan2012.cw.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-public class MainMenuActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
     final static MainController mainController = new MainController();
     static int statusCode;
     EditText ed1,ed2;
@@ -48,73 +48,41 @@ public class MainMenuActivity extends AppCompatActivity {
     Session loginSession;
     SessionManager session;
     static HttpResponse httpResponse;
+    HashMap<String, String> user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_menu);
-        ed1 = (EditText)findViewById(R.id.editText);
-        ed2 = (EditText)findViewById(R.id.editText2);
-        tx1 = (TextView)findViewById(R.id.resultText);
+        setContentView(R.layout.activity_login);
+        initializeFooter();
+
+        ed1 = (EditText)findViewById(R.id.emailText);
+        ed2 = (EditText)findViewById(R.id.passwordText);
 
         //Session Session Manager'
         session = new SessionManager(getApplicationContext());
+        user = session.getUserDetails();
         String sessionStatus = session.getSessionStatus();
         //String status= session.getLogoutStatus();
                     //descriptionIntent.getExtras().getString("status");
-        if (sessionStatus.equals("notLoggedIn")) {
-            tx1.setText("Please register an employer account!");
-        } else if(sessionStatus.equals("loggedOut")){
-            tx1.setText("You have successfully logged out!");
-        }else {
-            tx1.setText("");
-        }
         //}
 
-        final Button button = (Button)findViewById(R.id.LoginButton);
-        button.setOnClickListener(new View.OnClickListener() {
+        final Button loginButton = (Button)findViewById(R.id.loginButton);
+        loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new HttpAsyncTask().execute("https://clockwork-api.herokuapp.com/users/sign_in.json");
             }
         });
 
-        final Button button2 = (Button)findViewById(R.id.ListingButton);
-        button2.setOnClickListener(new View.OnClickListener() {
+        final Button registerButton = (Button)findViewById(R.id.registerButton);
+        registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent jobListing = new Intent(view.getContext(), JobListsActivity.class);
-                startActivity(jobListing);
+                Intent registerType = new Intent(view.getContext(), RegisterTypeActivity.class);
+                startActivity(registerType);
             }
         });
-
-        final Button button3 = (Button)findViewById(R.id.RegisterButton);
-        button3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent register = new Intent(view.getContext(), RegisterTypeActivity.class);
-                startActivity(register);
-            }
-        });
-
-        final Button addPostButton = (Button) findViewById(R.id.addPostButton);
-        addPostButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent addNewPost = new Intent(view.getContext(), AddNewPostActivity.class);
-                startActivity(addNewPost);
-            }
-        });
-
-        final Button dashboardButton = (Button) findViewById(R.id.dashboardButton);
-        dashboardButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent empDashboard = new Intent(view.getContext(), EmployerDashboardActivity.class);
-                startActivity(empDashboard);
-            }
-        });
-
     }
 
     @Override
@@ -209,7 +177,7 @@ public class MainMenuActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             if(statusCode == 401) {
-                tx1.setText("The email / password is invalid, please try again.");
+                //tx1.setText("The email / password is invalid, please try again.");
             }else {
                 Gson gson = new Gson();
                 Type hashType = new TypeToken<HashMap<String, Object>>(){}.getType();
@@ -259,5 +227,69 @@ public class MainMenuActivity extends AppCompatActivity {
         inputStream.close();
         return result;
 
+    }
+
+    public void initializeFooter() {
+        final ImageButton jobListing = (ImageButton)findViewById(R.id.jobListing);
+        jobListing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent jobListing = new Intent(view.getContext(), JobListsActivity.class);
+                startActivity(jobListing);
+            }
+        });
+
+        final ImageButton jobDashboard = (ImageButton) findViewById(R.id.jobDashboard);
+        jobDashboard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // to change and check for employer or JS dashboard
+                if (session.checkLogin()) {
+                    Intent loginRedirect = new Intent(view.getContext(), LoginActivity.class);
+                    startActivity(loginRedirect);
+                } else {
+                    if (user.get(SessionManager.KEY_ACCOUNTYPE).equalsIgnoreCase("employer")) {
+                        Intent employerDashboard = new Intent(view.getContext(), EmployerDashboardActivity.class);
+                        startActivity(employerDashboard);
+                    } else {
+                        Intent jsDashboard = new Intent(view.getContext(), JSDashboardActivity.class);
+                        startActivity(jsDashboard);
+                    }
+                }
+            }
+        });
+
+        final ImageButton accountSettings = (ImageButton) findViewById(R.id.accountSettings);
+        accountSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // to change the link
+                if (session.checkLogin()) {
+                    Intent loginRedirect = new Intent(view.getContext(), LoginActivity.class);
+                    startActivity(loginRedirect);
+                } else {
+                    if (user.get(SessionManager.KEY_ACCOUNTYPE).equalsIgnoreCase("employer")) {
+                        // to confirm and change link
+                    } else {
+                        Intent editProfile = new Intent(view.getContext(), EditProfileActivity.class);
+                        startActivity(editProfile);
+                    }
+                }
+            }
+        });
+
+        final ImageButton analytics = (ImageButton) findViewById(R.id.analytics);
+        analytics.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //
+                if (session.checkLogin()) {
+                    Intent loginRedirect = new Intent(view.getContext(), LoginActivity.class);
+                    startActivity(loginRedirect);
+                } else {
+                    // analytics link
+                }
+            }
+        });
     }
 }

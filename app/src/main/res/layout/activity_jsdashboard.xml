@@ -1,22 +1,39 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/grey"
-    tools:context="com.android.clockwork.view.activity.JobListsActivity">
+    tools:context="com.android.clockwork.view.activity.JSDashboardActivity">
 
     <LinearLayout
-        android:layout_alignParentTop="true"
+        android:orientation="vertical"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center">
-        <ListView
-            android:id="@+id/list"
-            android:layout_width="fill_parent"
-            android:layout_height="500dp"
-            android:divider="@null"
-            android:dividerHeight="0dp"/>
-    </LinearLayout>
+        android:layout_height="fill_parent"
+        android:layout_centerHorizontal="true">
 
+        <include layout="@layout/header" />
+
+        <Button
+            android:background="@drawable/primary_button"
+            android:layout_centerInParent="true"
+            android:text="logout"
+            android:id="@+id/logoutButton"
+            style="@style/button_text" />
+
+
+        <LinearLayout
+            android:layout_alignParentTop="true"
+            android:layout_width="match_parent"
+            android:layout_height="360dp"
+            android:gravity="center">
+            <ListView
+                android:id="@+id/publishedList"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:divider="@null"
+                android:dividerHeight="0dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="50dp"

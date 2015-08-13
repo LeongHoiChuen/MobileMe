@@ -18,7 +18,7 @@ public class FooterActivity extends AppCompatActivity {
         setContentView(R.layout.footer);
     }
 
-    public void jobListingView(View view) {
+    public void initializeFooter() {
         final ImageButton jobListing = (ImageButton)findViewById(R.id.jobListing);
         jobListing.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -27,9 +27,7 @@ public class FooterActivity extends AppCompatActivity {
                 startActivity(jobListing);
             }
         });
-    }
 
-    public void jobDashboardView(View view) {
         final ImageButton jobDashboard = (ImageButton) findViewById(R.id.jobDashboard);
         jobDashboard.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,9 +37,7 @@ public class FooterActivity extends AppCompatActivity {
                 startActivity(jobDashboard);
             }
         });
-    }
 
-    public void accountSettingsView(View view) {
         final ImageButton accountSettings = (ImageButton) findViewById(R.id.accountSettings);
         accountSettings.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,9 +47,7 @@ public class FooterActivity extends AppCompatActivity {
                 startActivity(jobDashboard);
             }
         });
-    }
 
-    public void analyticsView(View view) {
         final ImageButton analytics = (ImageButton) findViewById(R.id.analytics);
         analytics.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -22,5 +22,6 @@
     <string name="title_section3">Section 3</string>
     <string name="title_activity_employer_dashboard">EmployerDashboardActivity</string>
     <string name="title_activity_footer">FooterActivity</string>
+    <string name="title_activity_jsdashboard">JSDashboardActivity</string>
 
 </resources>

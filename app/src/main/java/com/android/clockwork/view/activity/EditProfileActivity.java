@@ -3,7 +3,6 @@ package com.android.clockwork.view.activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
@@ -14,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import com.android.clockwork.model.SessionManager;
 import com.example.jiabaotan2012.cw.R;
@@ -50,6 +50,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
+        initializeFooter();
 
         session = new SessionManager(getApplicationContext());
         user = session.getUserDetails();
@@ -183,5 +184,69 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         protected void onPostExecute(String result) {
             //Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
         }
+    }
+
+    public void initializeFooter() {
+        final ImageButton jobListing = (ImageButton)findViewById(R.id.jobListing);
+        jobListing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent jobListing = new Intent(view.getContext(), JobListsActivity.class);
+                startActivity(jobListing);
+            }
+        });
+
+        final ImageButton jobDashboard = (ImageButton) findViewById(R.id.jobDashboard);
+        jobDashboard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // to change and check for employer or JS dashboard
+                if (session.checkLogin()) {
+                    Intent loginRedirect = new Intent(view.getContext(), LoginActivity.class);
+                    startActivity(loginRedirect);
+                } else {
+                    if (user.get(SessionManager.KEY_ACCOUNTYPE).equalsIgnoreCase("employer")) {
+                        Intent employerDashboard = new Intent(view.getContext(), EmployerDashboardActivity.class);
+                        startActivity(employerDashboard);
+                    } else {
+                        Intent jsDashboard = new Intent(view.getContext(), JSDashboardActivity.class);
+                        startActivity(jsDashboard);
+                    }
+                }
+            }
+        });
+
+        final ImageButton accountSettings = (ImageButton) findViewById(R.id.accountSettings);
+        accountSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // to change the link
+                if (session.checkLogin()) {
+                    Intent loginRedirect = new Intent(view.getContext(), LoginActivity.class);
+                    startActivity(loginRedirect);
+                } else {
+                    if (user.get(SessionManager.KEY_ACCOUNTYPE).equalsIgnoreCase("employer")) {
+                        // to confirm and change link
+                    } else {
+                        Intent editProfile = new Intent(view.getContext(), EditProfileActivity.class);
+                        startActivity(editProfile);
+                    }
+                }
+            }
+        });
+
+        final ImageButton analytics = (ImageButton) findViewById(R.id.analytics);
+        analytics.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //
+                if (session.checkLogin()) {
+                    Intent loginRedirect = new Intent(view.getContext(), LoginActivity.class);
+                    startActivity(loginRedirect);
+                } else {
+                    // analytics link
+                }
+            }
+        });
     }
 }

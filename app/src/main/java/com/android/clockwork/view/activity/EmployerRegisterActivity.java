@@ -10,6 +10,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.android.clockwork.model.Account;
 import com.android.clockwork.model.SessionManager;
@@ -44,12 +46,16 @@ public class EmployerRegisterActivity extends ActionBarActivity {
     SessionManager session;
     static HttpResponse httpResponse;
     static int statusCode;
+    HashMap<String, String> user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_employer_register);
+        initializeFooter();
         session = new SessionManager(getApplicationContext());
+
+        user = session.getUserDetails();
 
         emailText = (EditText)findViewById(R.id.emailText);
         nameText = (EditText)findViewById(R.id.nameText);
@@ -165,7 +171,7 @@ public class EmployerRegisterActivity extends ActionBarActivity {
         // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result) {
-            //Toast.makeText(getBaseContext(), "Data Sent!", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
 
             if (statusCode == 201) {
                 Gson gson = new Gson();
@@ -195,5 +201,69 @@ public class EmployerRegisterActivity extends ActionBarActivity {
 
         inputStream.close();
         return result;
+    }
+
+    public void initializeFooter() {
+        final ImageButton jobListing = (ImageButton)findViewById(R.id.jobListing);
+        jobListing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent jobListing = new Intent(view.getContext(), JobListsActivity.class);
+                startActivity(jobListing);
+            }
+        });
+
+        final ImageButton jobDashboard = (ImageButton) findViewById(R.id.jobDashboard);
+        jobDashboard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // to change and check for employer or JS dashboard
+                if (session.checkLogin()) {
+                    Intent loginRedirect = new Intent(view.getContext(), LoginActivity.class);
+                    startActivity(loginRedirect);
+                } else {
+                    if (user.get(SessionManager.KEY_ACCOUNTYPE).equalsIgnoreCase("employer")) {
+                        Intent employerDashboard = new Intent(view.getContext(), EmployerDashboardActivity.class);
+                        startActivity(employerDashboard);
+                    } else {
+                        Intent jsDashboard = new Intent(view.getContext(), JSDashboardActivity.class);
+                        startActivity(jsDashboard);
+                    }
+                }
+            }
+        });
+
+        final ImageButton accountSettings = (ImageButton) findViewById(R.id.accountSettings);
+        accountSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // to change the link
+                if (session.checkLogin()) {
+                    Intent loginRedirect = new Intent(view.getContext(), LoginActivity.class);
+                    startActivity(loginRedirect);
+                } else {
+                    if (user.get(SessionManager.KEY_ACCOUNTYPE).equalsIgnoreCase("employer")) {
+                        // to confirm and change link
+                    } else {
+                        Intent editProfile = new Intent(view.getContext(), EditProfileActivity.class);
+                        startActivity(editProfile);
+                    }
+                }
+            }
+        });
+
+        final ImageButton analytics = (ImageButton) findViewById(R.id.analytics);
+        analytics.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //
+                if (session.checkLogin()) {
+                    Intent loginRedirect = new Intent(view.getContext(), LoginActivity.class);
+                    startActivity(loginRedirect);
+                } else {
+                    // analytics link
+                }
+            }
+        });
     }
 }

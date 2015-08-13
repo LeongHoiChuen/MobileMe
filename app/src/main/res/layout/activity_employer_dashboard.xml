@@ -18,11 +18,18 @@
             android:text="+ Add New Job"
             android:id="@+id/addPostButton"
             style="@style/button_text" />
+        <Button
+            android:background="@drawable/primary_button"
+            android:layout_centerInParent="true"
+            android:text="logout"
+            android:id="@+id/logoutButton"
+            style="@style/button_text" />
+
 
         <LinearLayout
             android:layout_alignParentTop="true"
             android:layout_width="match_parent"
-            android:layout_height="375dp"
+            android:layout_height="310dp"
             android:gravity="center">
             <ListView
                 android:id="@+id/publishedList"
@@ -33,5 +40,43 @@
         </LinearLayout>
 
     </LinearLayout>
-    <include layout="@layout/footer" />
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:background="#25292c"
+        android:gravity="center_horizontal" >
+
+        <ImageButton
+            android:id="@+id/jobListing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/tab_home_selected" />
+
+        <ImageButton
+            android:id="@+id/jobDashboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/tab_job" />
+
+        <ImageButton
+            android:id="@+id/accountSettings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/tab_user" />
+
+        <ImageButton
+            android:id="@+id/analytics"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/tab_analytics" />
+    </LinearLayout>
 </RelativeLayout>
