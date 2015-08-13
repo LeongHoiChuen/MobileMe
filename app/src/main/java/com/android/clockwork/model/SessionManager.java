@@ -56,7 +56,7 @@ public class SessionManager {
 
     public static final String KEY_ID = "id" ;
 
-    String status = "";
+    public static String status = "";
 
     // Constructor
     public SessionManager(Context context){
