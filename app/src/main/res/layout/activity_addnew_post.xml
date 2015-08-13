@@ -1,0 +1,193 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="50dp"
+    android:background="@color/primary"
+    tools:context="com.android.clockwork.view.activity.AddNewPostActivity"
+    android:gravity="center" >
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:background="@drawable/rounded_corner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView2"
+            android:src="@drawable/cw"
+            android:layout_gravity="center_horizontal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Let's create a new listing"
+            android:layout_marginBottom="15dp"
+            android:id="@+id/textView4"
+            android:layout_gravity="center_horizontal" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:orientation="horizontal" >
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Job Title :"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+                <EditText
+                    android:id="@+id/jobTitle"
+                    android:inputType="text"
+                    android:textSize="15sp"
+                    android:hint="What is the job title?"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:orientation="horizontal" >
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Job Location :"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+                <EditText
+                    android:id="@+id/jobLocation"
+                    android:inputType="text"
+                    android:textSize="15sp"
+                    android:hint="Where is the location?"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:orientation="horizontal" >
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Description :"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+                <EditText
+                    android:id="@+id/jobDescription"
+                    android:inputType="textMultiLine"
+                    android:textSize="15sp"
+                    android:hint="What does the job entail?"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:orientation="horizontal" >
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Job Date :"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+                <EditText
+                    android:id="@+id/jobDate"
+                    android:textSize="15sp"
+                    android:hint="When is the job?"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:orientation="horizontal" >
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Salary :"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+                <EditText
+                    android:id="@+id/salary"
+                    android:inputType="number"
+                    android:hint="Salary per hour"
+                    android:textSize="15sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:background="@drawable/primary_button"
+                    android:layout_centerInParent="true"
+                    android:text="Create Listing"
+                    android:id="@+id/submitBtn"
+                    style="@style/button_text" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:background="#25292c"
+        android:gravity="center_horizontal" >
+
+        <ImageButton
+            android:id="@+id/jobListing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/tab_home_selected" />
+
+        <ImageButton
+            android:id="@+id/jobDashboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/tab_job" />
+
+        <ImageButton
+            android:id="@+id/accountSettings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/tab_user" />
+
+        <ImageButton
+            android:id="@+id/analytics"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/tab_analytics" />
+    </LinearLayout>
+</RelativeLayout>

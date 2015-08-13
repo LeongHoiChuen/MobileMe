@@ -1,0 +1,59 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/grey"
+    tools:context="com.android.clockwork.view.activity.JobListsActivity">
+
+    <LinearLayout
+        android:layout_alignParentTop="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+        <ListView
+            android:id="@+id/list"
+            android:layout_width="fill_parent"
+            android:layout_height="500dp"
+            android:divider="@null"
+            android:dividerHeight="0dp"/>
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:background="#25292c"
+        android:gravity="center_horizontal" >
+
+        <ImageButton
+            android:id="@+id/jobListing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/tab_home_selected" />
+
+        <ImageButton
+            android:id="@+id/jobDashboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/tab_job" />
+
+        <ImageButton
+            android:id="@+id/accountSettings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/tab_user" />
+
+        <ImageButton
+            android:id="@+id/analytics"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/tab_analytics" />
+    </LinearLayout>
+</RelativeLayout>
