@@ -30,10 +30,6 @@ public class JSDashboardActivity extends AppCompatActivity {
         email = user.get(SessionManager.KEY_EMAIL);
         authToken = user.get(SessionManager.KEY_AUTHENTICATIONTOKEN);
 
-        if (session.checkLogin()) {
-            finish();
-        }
-
         final Button logoutButton = (Button) findViewById(R.id.logoutButton);
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override

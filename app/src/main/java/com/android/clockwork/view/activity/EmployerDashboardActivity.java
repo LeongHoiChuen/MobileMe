@@ -58,9 +58,6 @@ public class EmployerDashboardActivity extends AppCompatActivity {
         email = user.get(SessionManager.KEY_EMAIL);
         authToken = user.get(SessionManager.KEY_AUTHENTICATIONTOKEN);
 
-        if (session.checkLogin()) {
-            finish();
-        }
 
         new HttpAsyncTask().execute("https://clockwork-api.herokuapp.com/api/v1/users/get_jobs");
 

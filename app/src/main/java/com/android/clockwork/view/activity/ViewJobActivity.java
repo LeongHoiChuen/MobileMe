@@ -54,7 +54,12 @@ public class ViewJobActivity extends AppCompatActivity {
         Button applyButton = (Button) findViewById(R.id.applyButton);
         if (session.checkLogin()) {
             applyButton.setText("Login to apply");
+        }else {
+            if(user.get(SessionManager.KEY_ACCOUNTYPE).equals("employer")){
+                applyButton.setText("-");
+            }
         }
+
 
         post = getIntent().getParcelableExtra(JobListsActivity.PAR_KEY);
 
@@ -81,7 +86,10 @@ public class ViewJobActivity extends AppCompatActivity {
                 if (session.checkLogin()) {
                     Intent loginRedirect = new Intent(view.getContext(), MainMenuActivity.class);
                     startActivity(loginRedirect);
-                } else {
+                }
+                else if(user.get(SessionManager.KEY_ACCOUNTYPE).equals("employer")) {
+
+                }else{
                     new HttpAsyncTask().execute("https://clockwork-api.herokuapp.com/api/v1/users/apply");
                     Intent dashboard = new Intent(view.getContext(), JSDashboardActivity.class);
                     startActivity(dashboard);
