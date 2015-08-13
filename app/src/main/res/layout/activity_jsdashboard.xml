@@ -12,6 +12,7 @@
 
         <include layout="@layout/header" />
 
+
         <Button
             android:background="@drawable/primary_button"
             android:layout_centerInParent="true"
@@ -25,6 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="360dp"
             android:gravity="center">
+
             <ListView
                 android:id="@+id/publishedList"
                 android:layout_width="fill_parent"
