@@ -71,6 +71,9 @@ public class JSDashboardActivity extends AppCompatActivity {
                 appliedAdapter = (AppliedAdapter) publishedList.getAdapter();
                 post = (Post) appliedAdapter.getItem(position);
                 new HttpAsyncTask().execute("https://clockwork-api.herokuapp.com/api/v1/users/withdraw");
+
+                Intent jsDashboard = new Intent(view.getContext(), JSDashboardActivity.class);
+                startActivity(jsDashboard);
             }
         });
 
