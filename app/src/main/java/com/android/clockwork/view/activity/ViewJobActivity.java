@@ -53,7 +53,7 @@ public class ViewJobActivity extends AppCompatActivity {
 
         Button applyButton = (Button) findViewById(R.id.applyButton);
         if (session.checkLogin()) {
-            applyButton.setText("Login");
+            applyButton.setText("Login to apply");
         }
 
         post = getIntent().getParcelableExtra(JobListsActivity.PAR_KEY);
@@ -78,12 +78,11 @@ public class ViewJobActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //submit new job post
-                new HttpAsyncTask().execute("https://clockwork-api.herokuapp.com/api/v1/users/apply");
-
                 if (session.checkLogin()) {
                     Intent loginRedirect = new Intent(view.getContext(), MainMenuActivity.class);
                     startActivity(loginRedirect);
                 } else {
+                    new HttpAsyncTask().execute("https://clockwork-api.herokuapp.com/api/v1/users/apply");
                     Intent dashboard = new Intent(view.getContext(), JSDashboardActivity.class);
                     startActivity(dashboard);
                 }
