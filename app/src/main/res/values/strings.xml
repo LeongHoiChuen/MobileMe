@@ -25,5 +25,6 @@
     <string name="title_activity_footer">FooterActivity</string>
     <string name="title_activity_jsdashboard">JSDashboardActivity</string>
     <string name="title_activity_view_job">ViewJobActivity</string>
+    <string name="title_activity_edit_employer_profile">EditEmployerProfileActivity</string>
 
 </resources>

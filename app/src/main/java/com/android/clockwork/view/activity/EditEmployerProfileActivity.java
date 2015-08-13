@@ -1,81 +1,106 @@
 package com.android.clockwork.view.activity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
-import com.android.clockwork.model.Account;
 import com.android.clockwork.model.SessionManager;
 import com.example.jiabaotan2012.cw.R;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONObject;
+import org.apache.http.message.BasicNameValuePair;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.message.BasicNameValuePair;
+public class EditEmployerProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
-
-public class EmployerRegisterActivity extends ActionBarActivity {
-
-    EditText emailText, nameText, pwText;
-    Account account;
+    EditText addrText, numText, dateText;
+    Button submitBtn;
+    DatePickerDialog datePickerDialog;
+    SimpleDateFormat sdf;
     SessionManager session;
-    static HttpResponse httpResponse;
-    static int statusCode;
     HashMap<String, String> user;
+    String email, authToken, username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_employer_register);
+        setContentView(R.layout.activity_edit_employer_profile);
         initializeFooter();
+
         session = new SessionManager(getApplicationContext());
-
         user = session.getUserDetails();
+        username = user.get(SessionManager.KEY_NAME);
+        email = user.get(SessionManager.KEY_EMAIL);
+        authToken = user.get(SessionManager.KEY_AUTHENTICATIONTOKEN);
 
-        emailText = (EditText)findViewById(R.id.emailText);
-        nameText = (EditText)findViewById(R.id.nameText);
-        pwText = (EditText)findViewById(R.id.pwText);
+        addrText = (EditText) findViewById(R.id.addrText);
+        numText = (EditText) findViewById(R.id.numText);
+        dateText = (EditText) findViewById(R.id.dateText);
+        dateText.setInputType(InputType.TYPE_NULL);
 
-        final Button submitBtn = (Button)findViewById(R.id.submitBtn);
+        sdf = new SimpleDateFormat("dd-MM-yyy");
+        setDateTimeField();
+
+        submitBtn = (Button) findViewById(R.id.submitBtn);
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new HttpAsyncTask().execute("https://clockwork-api.herokuapp.com/users.json");
+                // update new account details using PUT
+                new HttpAsyncTask().execute("https://clockwork-api.herokuapp.com/api/v1/users/update");
 
-                Intent jobListings = new Intent(view.getContext(), EditEmployerProfileActivity.class);
-                startActivity(jobListings);
+                Intent listingIntent = new Intent(view.getContext(), JobListsActivity.class);
+                startActivity(listingIntent);
             }
         });
+    }
+
+    private void setDateTimeField() {
+        dateText.setOnClickListener(this);
+        Calendar newCalendar = Calendar.getInstance();
+        datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year, monthOfYear, dayOfMonth);
+                dateText.setText(sdf.format(newDate.getTime()));
+            }
+
+        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+    }
+
+    public void onClick(View v) {
+        datePickerDialog.show();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_register, menu);
+        getMenuInflater().inflate(R.menu.menu_edit_profile, menu);
         return true;
     }
 
@@ -94,58 +119,37 @@ public class EmployerRegisterActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public static String POST(String url, Account account){
+    public String PUT(String url){
         InputStream inputStream = null;
         String result = "";
         try {
-
             // 1. create HttpClient
             HttpClient httpclient = new DefaultHttpClient();
 
             // 2. make POST request to the given URL
             HttpPost httpPost = new HttpPost(url);
 
-            String json = "";
+            // 3. build NVP
+            List<NameValuePair> nvps = new ArrayList<NameValuePair>();
+            nvps.add(new BasicNameValuePair("email", email));
+            nvps.add(new BasicNameValuePair("username", username));
+            nvps.add(new BasicNameValuePair("address", addrText.getText().toString()));
+            nvps.add(new BasicNameValuePair("contact_number", numText.getText().toString()));
+            nvps.add(new BasicNameValuePair("date_of_birth", "" + dateText.getText().toString()));
 
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-            //jsonObject.accumulate("user[email]", account.getEmail());
-            //jsonObject.accumulate("user[username]", account.getName());
-            //jsonObject.accumulate("user[password]", account.getPassword());
-            //jsonObject.accumulate("user[password_confirmation]", account.getRepassword());
-            //jsonObject.accumulate("user[account_type]", account.getType());
+            // 4. set httpPost Entity
+            httpPost.setEntity(new UrlEncodedFormEntity(nvps));
 
-            List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-            pairs.add(new BasicNameValuePair("user[email]", account.getEmail()));
-            pairs.add(new BasicNameValuePair("user[username]", account.getName()));
-            pairs.add(new BasicNameValuePair("user[password]", account.getPassword()));
-            pairs.add(new BasicNameValuePair("user[password_confirmation]", account.getRepassword()));
-            pairs.add(new BasicNameValuePair("user[account_type]", account.getType()));
+            // 5. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Authentication-Token", authToken);
 
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
+            // 6. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
 
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            //StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(new UrlEncodedFormEntity(pairs));
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-
-            // 8. Execute POST request to the given URL
-            httpResponse = httpclient.execute(httpPost);
-            statusCode = httpResponse.getStatusLine().getStatusCode();
-
-            // 9. receive response as inputStream
+            // 7. receive response as inputStream
             inputStream = httpResponse.getEntity().getContent();
 
-            // 10. convert inputstream to string
+            // 8. convert inputstream to string
             if(inputStream != null)
                 result = convertInputStreamToString(inputStream);
             else
@@ -155,40 +159,8 @@ public class EmployerRegisterActivity extends ActionBarActivity {
             Log.d("InputStream", e.getLocalizedMessage());
         }
 
-        // 11. return result
+        // 9. return result
         return result;
-    }
-
-    private class HttpAsyncTask extends AsyncTask<String, Void, String> {
-        @Override
-        protected String doInBackground(String... urls) {
-            account = new Account(emailText.getText().toString(), nameText.getText().toString(), pwText.getText().toString(),
-                    pwText.getText().toString(), "employer");
-
-            return POST(urls[0], account);
-        }
-        // onPostExecute displays the results of the AsyncTask.
-        @Override
-        protected void onPostExecute(String result) {
-            //Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
-
-            if (statusCode == 201) {
-                Gson gson = new Gson();
-                Type hashType = new TypeToken<HashMap<String, Object>>() {}.getType();
-                HashMap userHash = gson.fromJson(result, hashType);
-                Double idDouble = (Double) userHash.get("id");
-                int id = idDouble.intValue();
-                String username = (String) userHash.get("username");
-                String email = (String) userHash.get("email");
-                String accountType = (String) userHash.get("account_type");
-                String authenticationToken = (String) userHash.get("authentication_token");
-                String passWord = pwText.getText().toString();
-                session.createUserLoginSession(id, username, email, accountType, passWord, authenticationToken);
-                //finish();
-            } else {
-                //set your edit text to display the error msg (E.g password too short or email invalid, according to the API response
-            }
-        }
     }
 
     private static String convertInputStreamToString(InputStream inputStream) throws IOException {
@@ -200,6 +172,18 @@ public class EmployerRegisterActivity extends ActionBarActivity {
 
         inputStream.close();
         return result;
+    }
+
+    private class HttpAsyncTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... urls) {
+            return PUT(urls[0]);
+        }
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result) {
+            //Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
+        }
     }
 
     public void initializeFooter() {
