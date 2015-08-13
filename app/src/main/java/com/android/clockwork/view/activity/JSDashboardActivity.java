@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.clockwork.model.Post;
 import com.android.clockwork.model.SessionManager;
@@ -67,8 +68,8 @@ public class JSDashboardActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView adptView, View view, int position, long arg3) {
                 // to be changed
-                post = (Post) appliedAdapter.getItem(position);
                 appliedAdapter = (AppliedAdapter) publishedList.getAdapter();
+                post = (Post) appliedAdapter.getItem(position);
                 new HttpAsyncTask().execute("https://clockwork-api.herokuapp.com/api/v1/users/withdraw");
             }
         });
@@ -127,14 +128,20 @@ public class JSDashboardActivity extends AppCompatActivity {
         // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result) {
-            Gson gson = new Gson();
-            Type listType = new TypeToken<ArrayList<Post>>(){}.getType();
-            postList = gson.fromJson(result, listType);
+            if (post == null) {
+                Gson gson = new Gson();
+                Type listType = new TypeToken<ArrayList<Post>>() {
+                }.getType();
+                postList = gson.fromJson(result, listType);
 
-            appliedAdapter = new AppliedAdapter(JSDashboardActivity.this, postList);
+                appliedAdapter = new AppliedAdapter(JSDashboardActivity.this, postList);
 
-            publishedList.setAdapter(appliedAdapter);
-            dialog.dismiss();
+                publishedList.setAdapter(appliedAdapter);
+                dialog.dismiss();
+            } else {
+                post = null;
+                Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
+            }
         }
     }
 

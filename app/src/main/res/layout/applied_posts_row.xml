@@ -60,7 +60,7 @@
             <!-- Number of Applicants -->
 
             <!-- Edit Button -->
-            <Button
+            <TextView
                 android:background="@drawable/primary_button"
                 android:text="Withdraw"
                 android:id="@+id/withdrawButton"

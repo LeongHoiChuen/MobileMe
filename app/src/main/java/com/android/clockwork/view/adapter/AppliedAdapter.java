@@ -63,7 +63,7 @@ public class AppliedAdapter extends BaseAdapter {
         TextView jobTitle = (TextView) view.findViewById(R.id.jobTitle);
         TextView jobDate = (TextView) view.findViewById(R.id.jobDate);
         TextView salary = (TextView) view.findViewById(R.id.salary);
-        Button editButton = (Button) view.findViewById(R.id.withdrawButton);
+        //Button editButton = (Button) view.findViewById(R.id.withdrawButton);
         // set text
         jobTitle.setText(p.getHeader());
         jobDate.setText("" + p.getJobDate());
